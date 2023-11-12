@@ -14,8 +14,8 @@ def SW_on_01(epsilon, input_x):
     right_t = (input_x + 2 * b) / (1 + 2 * b)
     interval_endpoint = [0, left_t, right_t, 1]
     interval_probability = [left_right_probability, central_probability, left_right_probability]
-    print(f"Interval endpoint: [{interval_endpoint}]")
-    print(f"Interval probability: [{interval_probability}]")
+    # print(f"Interval endpoint: [{interval_endpoint}]")
+    # print(f"Interval probability: [{interval_probability}]")
     return interval_probability, interval_endpoint
 
 
@@ -33,6 +33,6 @@ if __name__ == "__main__":
     x = np.linspace(0, 1, 10, endpoint=False)
     # x = [0]
     for i, _ in enumerate(x):
-        interval_probability, interval_endpoint = SW_on_01(1, x[i])
+        interval_probability, interval_endpoint = SW(1, x[i])
         distance = L1_distance(interval_probability, interval_endpoint, x[i], 3)
         print(f"L_1 distance: {distance}")

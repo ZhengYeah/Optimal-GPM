@@ -4,11 +4,16 @@ from gurobipy import GRB
 import numpy as np
 import matplotlib.pyplot as plt
 
-def m_optimal_piecewise(epsilon, total_piece, delta):
+
+def m_optimal_piecewise(epsilon, total_piece, delta, x=0):
     """
     :param epsilon: privacy budget
+    :param total_piece: piece number
+    :param delta: probabilistic-DP delta
+    :param x: ture data, end-point has the largest error
     :return: probability list, interval endpoint list
     """
+    assert (0 <= x <= 1)
     mid = (total_piece - 1) // 2
 
     m = gp.Model("Quadratic Non-convex")
@@ -16,7 +21,7 @@ def m_optimal_piecewise(epsilon, total_piece, delta):
 
     # l_i: interval end-points
     # p_i: probability of piece i
-    # interval region: [0, 1]
+    # default interval region: [0, 1]
 
     l = m.addMVar(shape=total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="l")
     p = m.addMVar(shape=total_piece, lb=0, vtype=GRB.CONTINUOUS, name="p")
@@ -34,6 +39,8 @@ def m_optimal_piecewise(epsilon, total_piece, delta):
     for i in range(total_piece):
         m.addConstr(l[i] <= l[i + 1], name="cons_3")
     m.addConstr(sum((l[i + 1] - l[i]) * p[i] for i in range(total_piece)) == 1, name="cons_3")
+    m.addConstr(l[mid] <= x, name="cons_3")
+    m.addConstr(x <= l[mid + 1], name="cons_3")
 
     # fixed output domain to be [0, 1]
     m.addConstr(l[total_piece] == 1, name="cons_3")
@@ -44,11 +51,6 @@ def m_optimal_piecewise(epsilon, total_piece, delta):
         m.addConstr(obj_tmp[i] == l[i + 1] * l[i + 1] - l[i] * l[i], name="cons_4")
     obj_center = m.addVar(lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="obj")
     m.addConstr(obj_center == l[mid] * l[mid] + l[mid + 1] * l[mid + 1], name="cons_4")
-
-    # end point, known the worst-case error is at endpoint
-    x = 0
-    m.addConstr(l[mid] <= x, name="cons_3")
-    m.addConstr(x <= l[mid + 1], name="cons_3")
 
     # minimize the L_1 distance for all x
     # encoding proved correct
@@ -75,5 +77,5 @@ def m_optimal_piecewise(epsilon, total_piece, delta):
 
 if __name__ == "__main__":
     # true_data = np.linspace(0, 1, 10, endpoint=False)
-    probabilities, intervals, obj_val = m_optimal_piecewise(epsilon=1, total_piece=3, delta=0.1)
+    probabilities, intervals, obj_val = m_optimal_piecewise(epsilon=1, total_piece=3, delta=0.05)
     print(probabilities, intervals, obj_val)

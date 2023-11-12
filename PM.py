@@ -2,6 +2,7 @@ import math
 import numpy as np
 from L1_distance import L1_distance
 
+
 def PM_on_01(epsilon, input_x):
     assert (0 <= input_x <= 1)
     # input mapping
@@ -26,6 +27,7 @@ def PM_on_01(epsilon, input_x):
     # print(f"Interval endpoint: [{interval_endpoint}]")
     # print(f"Interval probability: [{interval_probability}]")
     return interval_probability, interval_endpoint
+
 
 def PM_on_C(epsilon, input_x):
     assert (-1 <= input_x <= 1)

@@ -8,7 +8,7 @@ def min_wasserstein_probability(epsilon, total_piece):
     """
     compute optimal piecewise mechanism under Wasserstein distance
     :param epsilon: privacy budget
-    :total_piece: piece number
+    :param total_piece: piece number
     :return: Optimal probability list
     """
     m = gp.Model("Quadratic Non-convex")
