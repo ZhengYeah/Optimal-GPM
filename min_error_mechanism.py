@@ -153,7 +153,7 @@ class MinL1Mechanism(MinErrorMechanism):
         return res
 
 
-class MinWassersteinDistance(MinErrorMechanism):
+class MinWassersteinMechanism(MinErrorMechanism):
     def __init__(self, endpoint_a, endpoint_b, epsilon, total_piece, probabilities=None):
         """
         :param endpoint_a: left endpoint of the bound
@@ -168,70 +168,132 @@ class MinWassersteinDistance(MinErrorMechanism):
         self.total_piece = total_piece
         self.probabilities = probabilities
 
-    def solve_probability(self):
+    def solve_probabilities(self):
         mid = (self.total_piece - 1) // 2
 
-        m = gp.Model("Quadratic Non-convex")
-        m.Params.LogToConsole = 0
+        m_1 = gp.Model("Quadratic Non-convex")
+        m_1.Params.LogToConsole = 0
 
         # l_i: interval length of piece i, l_{total / 2} is the center piece
         # p_i: probability of piece i
         # interval region: [0, 1]
 
-        l = m.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="l")
-        p = m.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="p")
+        l = m_1.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="l")
+        p = m_1.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="p")
 
-        m.addConstr(p >= 0, name="cons_1")
-        m.addConstr(p[0] >= p[mid] / math.exp(self.epsilon), name="cons_2")
-        m.addConstr(p[self.total_piece - 1] >= p[mid] / math.exp(self.epsilon), name="cons_2")
+        m_1.addConstr(p >= 0, name="cons_1")
+        m_1.addConstr(p[0] >= p[mid] / math.exp(self.epsilon), name="cons_2")
+        m_1.addConstr(p[self.total_piece - 1] >= p[mid] / math.exp(self.epsilon), name="cons_2")
         for i in range(mid):
-            m.addConstr(p[i] <= p[i + 1], name="cons_2")
+            m_1.addConstr(p[i] <= p[i + 1], name="cons_2")
         for i in range(mid + 1, self.total_piece):
-            m.addConstr(p[i - 1] >= p[i], name="cons_2")
+            m_1.addConstr(p[i - 1] >= p[i], name="cons_2")
 
-        m.addConstr(l >= 0, name="cons_3")
-        m.addConstr(sum(l) == 1, name="cons_3")
-        m.addConstr(sum(l[i] * p[i] for i in range(self.total_piece)) == 1, name="cons_3")
+        m_1.addConstr(l >= 0, name="cons_3")
+        m_1.addConstr(sum(l) == self.endpoint_b - self.endpoint_a, name="cons_3")
+        m_1.addConstr(sum(l[i] * p[i] for i in range(self.total_piece)) == 1, name="cons_3")
 
         # Encoding for CDF block height
-        height = m.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="height")
+        height = m_1.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="height")
         for i in range(self.total_piece):
             if i == 0:
-                m.addConstr(height[i] == p[i] * l[i], name="cons_4")
+                m_1.addConstr(height[i] == p[i] * l[i], name="cons_4")
             else:
-                m.addConstr(height[i] == height[i - 1] + p[i] * l[i], name="cons_4")
+                m_1.addConstr(height[i] == height[i - 1] + p[i] * l[i], name="cons_4")
 
         # Encoding for integration of CDF
-        m.addConstr(sum(l[i] for i in range(mid)) <= x, name="cons_5")
-        m.addConstr(sum(l[i] for i in range(mid + 1)) >= x, name="cons_5")
-        left_integration = m.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
-        right_integration = m.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
-        left_length_x = m.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
-        m.addConstr(left_length_x == x - sum(l[i] for i in range(mid)), name="cons_5")
-        height_t = m.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
-        m.addConstr(height_t == left_length_x * p[mid], name="cons_5")
+        m_1.addConstr(sum(l[i] for i in range(mid)) <= self.endpoint_a, name="cons_5")
+        m_1.addConstr(sum(l[i] for i in range(mid + 1)) >= self.endpoint_a, name="cons_5")
+        left_integration = m_1.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
+        right_integration = m_1.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
+        left_length_x = m_1.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
+        m_1.addConstr(left_length_x == self.endpoint_a - sum(l[i] for i in range(mid)), name="cons_5")
+        height_t = m_1.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
+        m_1.addConstr(height_t == left_length_x * p[mid], name="cons_5")
 
         for i in range(mid + 1):
             if i == 0:
-                m.addConstr(left_integration[i] == height[i] * l[i] / 2, name="cons_5")
+                m_1.addConstr(left_integration[i] == height[i] * l[i] / 2, name="cons_5")
             elif i < mid:
-                m.addConstr(left_integration[i] == (height[i] + height[i - 1]) * l[i] / 2, name="cons_5")
+                m_1.addConstr(left_integration[i] == (height[i] + height[i - 1]) * l[i] / 2, name="cons_5")
             elif i == mid:
-                m.addConstr(left_integration[i] == left_length_x * (2 * height[i - 1] + height_t) / 2, name="cons_5")
+                m_1.addConstr(left_integration[i] == left_length_x * (2 * height[i - 1] + height_t) / 2, name="cons_5")
         for i in range(mid + 1):
             if i == 0:
-                m.addConstr(right_integration[i] == (l[mid] - left_length_x) *
+                m_1.addConstr(right_integration[i] == (l[mid] - left_length_x) *
                             (height[mid] + height_t) / 2, name="cons_5")
             else:
-                m.addConstr(right_integration[i] == (height[i + mid] + height[i + mid - 1]) * l[i + mid] / 2,
+                m_1.addConstr(right_integration[i] == (height[i + mid] + height[i + mid - 1]) * l[i + mid] / 2,
                             name="cons_5")
 
-        m.setObjective(sum(left_integration) + (1 - x) - sum(right_integration), GRB.MINIMIZE)
+        m_1.setObjective(sum(left_integration) + (1 - self.endpoint_a) - sum(right_integration), GRB.MINIMIZE)
 
-        m.setParam("NonConvex", 2)
-        m.optimize()
+        m_1.setParam("NonConvex", 2)
+        m_1.optimize()
 
-        return p.X, l.X, m.objVal
-
-        # for v in m.getVars():
+        # for v in m_1.getVars():
         #     print(v, v.x)
+
+        self.probabilities = p.X
+        for i in range(mid):
+            self.probabilities[i] = p.X[self.total_piece - 1 - i]
+        return p.X, l.X, m_1.objVal
+
+    def solve_lr(self, x):
+        p = self.probabilities
+        assert len(p) == self.total_piece
+
+        mid = (self.total_piece - 1) // 2
+        m_2 = gp.Model("Quadratic Non-convex")
+        m_2.Params.LogToConsole = 0
+
+        # l_i: interval length of piece i, l_{total / 2} is the center piece
+        # interval region: [0, 1]
+
+        l = m_2.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="l")
+        m_2.addConstr(l >= 0, name="cons_3")
+        m_2.addConstr(sum(l) == self.endpoint_b - self.endpoint_a, name="cons_3")
+        m_2.addConstr(sum(l[i] * p[i] for i in range(self.total_piece)) == 1, name="cons_3")
+
+        # Encoding for CDF block height
+        height = m_2.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="height")
+        for i in range(self.total_piece):
+            if i == 0:
+                m_2.addConstr(height[i] == p[i] * l[i], name="cons_4")
+            else:
+                m_2.addConstr(height[i] == height[i - 1] + p[i] * l[i], name="cons_4")
+
+        # Encoding for integration of CDF
+        m_2.addConstr(sum(l[i] for i in range(mid)) <= self.endpoint_a, name="cons_5")
+        m_2.addConstr(sum(l[i] for i in range(mid + 1)) >= self.endpoint_a, name="cons_5")
+        left_integration = m_2.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
+        right_integration = m_2.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
+        left_length_x = m_2.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
+        m_2.addConstr(left_length_x == self.endpoint_a - sum(l[i] for i in range(mid)), name="cons_5")
+        height_t = m_2.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
+        m_2.addConstr(height_t == left_length_x * p[mid], name="cons_5")
+
+        for i in range(mid + 1):
+            if i == 0:
+                m_2.addConstr(left_integration[i] == height[i] * l[i] / 2, name="cons_5")
+            elif i < mid:
+                m_2.addConstr(left_integration[i] == (height[i] + height[i - 1]) * l[i] / 2, name="cons_5")
+            elif i == mid:
+                m_2.addConstr(left_integration[i] == left_length_x * (2 * height[i - 1] + height_t) / 2, name="cons_5")
+        for i in range(mid + 1):
+            if i == 0:
+                m_2.addConstr(right_integration[i] == (l[mid] - left_length_x) *
+                            (height[mid] + height_t) / 2, name="cons_5")
+            else:
+                m_2.addConstr(right_integration[i] == (height[i + mid] + height[i + mid - 1]) * l[i + mid] / 2,
+                            name="cons_5")
+
+        m_2.setObjective(sum(left_integration) + (1 - self.endpoint_a) - sum(right_integration), GRB.MINIMIZE)
+
+        m_2.setParam("NonConvex", 2)
+        m_2.optimize()
+
+        # for v in m_2.getVars():
+        #     print(v, v.x)
+
+        return l.X, m_2.objVal
