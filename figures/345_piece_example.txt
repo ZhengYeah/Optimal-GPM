@@ -1,0 +1,12 @@
+Piece number = 3
+Restricted license - for non-production use only - expires 2024-10-28
+Probability List: [0.60640107 1.648369   0.60640107]
+Interval Lengths List: [0.11112714 0.37774573 0.51112713]
+
+Piece number = 4
+Probability List: [0.60655159 1.64877816 1.64877816 0.60655159]
+Interval Lengths List: [0.11124624 0.30589226 0.0716153  0.5112462 ]
+
+Piece number = 5
+Probability List: [0.60655159 1.64877816 1.64877816 1.64877816 0.60655159]
+Interval Lengths List: [0.11124623 0.09896216 0.20465769 0.07388771 0.51124621]

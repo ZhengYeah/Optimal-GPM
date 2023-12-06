@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def L1_distance(p, l, x, total_piece):
+def l1_distance(p, l, x, total_piece):
     """
     :param p: probability list
     :param l: interval end-point of piece i

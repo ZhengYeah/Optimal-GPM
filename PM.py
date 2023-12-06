@@ -1,6 +1,13 @@
 import math
 import numpy as np
-from L1_distance import L1_distance
+from L1_distance import l1_distance
+
+
+def in_machine_error(result, expectation):
+    if abs(result - expectation) <= np.finfo(float).eps:
+        return expectation
+    else:
+        return result
 
 
 def PM_on_01(epsilon, input_x):
@@ -19,6 +26,8 @@ def PM_on_01(epsilon, input_x):
     # [0, 1]-PM
     left_t = left_t / (2 * C) + 0.5
     right_t = right_t / (2 * C) + 0.5
+    left_t = in_machine_error(left_t, 0)
+    right_t = in_machine_error(right_t, 1)
     left_right_probability = left_right_probability * (2 * C)
     center_probability = center_probability * (2 * C)
 
@@ -49,5 +58,5 @@ if __name__ == "__main__":
     x = np.linspace(0, 1, 10, endpoint=False)
     for i, _ in enumerate(x):
         interval_probability, interval_endpoint = PM_on_01(1, x[i])
-        distance = L1_distance(interval_probability, interval_endpoint, x[i], 3)
+        distance = l1_distance(interval_probability, interval_endpoint, x[i], 3)
         print(f"L_1 distance: {distance}")

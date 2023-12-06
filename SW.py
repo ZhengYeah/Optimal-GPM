@@ -1,6 +1,6 @@
 import math
 import numpy as np
-from L1_distance import L1_distance
+from L1_distance import l1_distance
 
 def SW_on_01(epsilon, input_x):
     assert (0 <= input_x <= 1)
@@ -34,5 +34,5 @@ if __name__ == "__main__":
     # x = [0]
     for i, _ in enumerate(x):
         interval_probability, interval_endpoint = SW(1, x[i])
-        distance = L1_distance(interval_probability, interval_endpoint, x[i], 3)
+        distance = l1_distance(interval_probability, interval_endpoint, x[i], 3)
         print(f"L_1 distance: {distance}")
