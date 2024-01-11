@@ -1,5 +1,5 @@
 import math
-from min_error_mechanism import MinL1Mechanism
+from src.min_error_mechanism import MinL1Mechanism
 
 x = 0.16
 for i in range(3, 4):

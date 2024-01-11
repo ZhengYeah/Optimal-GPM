@@ -4,7 +4,7 @@ import gurobipy as gp
 from gurobipy import GRB
 
 
-class MinErrorMechanism:
+class MinErrorMechanism(object):
     """
     Min error mechanism class for given parameters D, epsilon, m
     See Figure: solving flow
@@ -13,17 +13,18 @@ class MinErrorMechanism:
     def __init__(self):
         pass
 
-    def solve_probabilities(self):
+    def solve_probabilities(self) -> [list, list, float]:
         """
         Solve the optimal probability p_i
-        :return: probability list
+        :return: [interval list, probability list, optimal error]
         """
         pass
 
-    def solve_lr(self, x):
+    def solve_lr(self, x) -> [list, float]:
         """
         Solve the l_i and r_i for x using p_i
-        :return: l_i, r_i
+        :param x: private input x
+        :return: [[l_i, r_i], optimal error]
         """
         pass
 
@@ -67,6 +68,7 @@ class MinL1Mechanism(MinErrorMechanism):
         for i in range(self.total_piece):
             m_1.addConstr(l[i] <= l[i + 1], name="cons_3")
         m_1.addConstr(sum((l[i + 1] - l[i]) * p[i] for i in range(self.total_piece)) == 1, name="cons_3")
+        # worst-case error
         m_1.addConstr(l[mid] <= self.endpoint_a, name="cons_3")
         m_1.addConstr(self.endpoint_a <= l[mid + 1], name="cons_3")
 
@@ -187,7 +189,6 @@ class MinWassersteinMechanism(MinErrorMechanism):
 
         # l_i: interval length of piece i, l_{total / 2} is the center piece
         # p_i: probability of piece i
-        # interval region: [0, 1]
 
         l = m_1.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="l")
         p = m_1.addMVar(shape=self.total_piece, vtype=GRB.CONTINUOUS, name="p")
@@ -212,13 +213,15 @@ class MinWassersteinMechanism(MinErrorMechanism):
             else:
                 m_1.addConstr(height[i] == height[i - 1] + p[i] * l[i], name="cons_4")
 
-        # Encoding for integration of CDF
-        m_1.addConstr(sum(l[i] for i in range(mid)) <= self.endpoint_a, name="cons_5")
-        m_1.addConstr(sum(l[i] for i in range(mid + 1)) >= self.endpoint_a, name="cons_5")
+        # encoding for integration of CDF
+        # worst-case error
+        m_1.addConstr(sum(l[i] for i in range(mid)) <= 0, name="cons_5")
+        m_1.addConstr(sum(l[i] for i in range(mid + 1)) >= 0, name="cons_5")
+
         left_integration = m_1.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
         right_integration = m_1.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
         left_length_x = m_1.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
-        m_1.addConstr(left_length_x == self.endpoint_a - sum(l[i] for i in range(mid)), name="cons_5")
+        m_1.addConstr(left_length_x == 0, name="cons_5")
         height_t = m_1.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
         m_1.addConstr(height_t == left_length_x * p[mid], name="cons_5")
 
@@ -237,7 +240,7 @@ class MinWassersteinMechanism(MinErrorMechanism):
                 m_1.addConstr(right_integration[i] == (height[i + mid] + height[i + mid - 1]) * l[i + mid] / 2,
                               name="cons_5")
 
-        m_1.setObjective(sum(left_integration) + (1 - self.endpoint_a) - sum(right_integration), GRB.MINIMIZE)
+        m_1.setObjective(sum(left_integration) + (self.endpoint_b - self.endpoint_a) - sum(right_integration), GRB.MINIMIZE)
 
         m_1.setParam("NonConvex", 2)
         m_1.optimize()
@@ -275,12 +278,12 @@ class MinWassersteinMechanism(MinErrorMechanism):
                 m_2.addConstr(height[i] == height[i - 1] + p[i] * l[i], name="cons_4")
 
         # Encoding for integration of CDF
-        m_2.addConstr(sum(l[i] for i in range(mid)) <= self.endpoint_a, name="cons_5")
-        m_2.addConstr(sum(l[i] for i in range(mid + 1)) >= self.endpoint_a, name="cons_5")
+        m_2.addConstr(sum(l[i] for i in range(mid)) <= x - self.endpoint_a, name="cons_5")
+        m_2.addConstr(sum(l[i] for i in range(mid + 1)) >= x - self.endpoint_a, name="cons_5")
         left_integration = m_2.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
         right_integration = m_2.addMVar(shape=(mid + 1), vtype=GRB.CONTINUOUS, name="left_integration")
         left_length_x = m_2.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
-        m_2.addConstr(left_length_x == self.endpoint_a - sum(l[i] for i in range(mid)), name="cons_5")
+        m_2.addConstr(left_length_x == x - self.endpoint_a - sum(l[i] for i in range(mid)), name="cons_5")
         height_t = m_2.addVar(vtype=GRB.CONTINUOUS, name="left_integration")
         m_2.addConstr(height_t == left_length_x * p[mid], name="cons_5")
 
@@ -299,7 +302,7 @@ class MinWassersteinMechanism(MinErrorMechanism):
                 m_2.addConstr(right_integration[i] == (height[i + mid] + height[i + mid - 1]) * l[i + mid] / 2,
                               name="cons_5")
 
-        m_2.setObjective(sum(left_integration) + (1 - self.endpoint_a) - sum(right_integration), GRB.MINIMIZE)
+        m_2.setObjective(sum(left_integration) + (self.endpoint_b - self.endpoint_a - x) - sum(right_integration), GRB.MINIMIZE)
 
         m_2.setParam("NonConvex", 2)
         m_2.optimize()

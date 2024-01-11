@@ -1,5 +1,5 @@
 import math
-from min_error_mechanism import MinL1CircleMechanism
+from src.min_error_mechanism import MinL1CircleMechanism
 
 for i in range(3, 4):
     piece_i = MinL1CircleMechanism(endpoint_a=0, endpoint_b=6.28, epsilon=1, total_piece=i)

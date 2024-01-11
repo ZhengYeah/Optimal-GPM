@@ -1,6 +1,6 @@
 import math
 import numpy as np
-from L1_distance import l1_distance
+from recycle_bin.L1_distance import l1_distance
 
 
 def in_machine_error(result, expectation):

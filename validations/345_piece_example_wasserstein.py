@@ -1,4 +1,4 @@
-from min_error_mechanism import MinWassersteinMechanism
+from src.min_error_mechanism import MinWassersteinMechanism
 
 
 for i in range(3, 6):

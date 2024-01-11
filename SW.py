@@ -1,6 +1,6 @@
 import math
 import numpy as np
-from L1_distance import l1_distance
+from recycle_bin.L1_distance import l1_distance
 
 def SW_on_01(epsilon, input_x):
     assert (0 <= input_x <= 1)
