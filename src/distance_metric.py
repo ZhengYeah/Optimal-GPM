@@ -4,6 +4,7 @@ from src.utilities import endpoints_to_lengths
 
 def l1_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
     """
+    distance = |y - x|
     :param endpoint_a: start point of domain D
     :param endpoint_b: end point of domain D
     :param p: probability list
@@ -33,6 +34,7 @@ def l1_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
 
 def wasserstein_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
     """
+    distance = |\int_{a}^{y} f_1(t) dt - \int_{a}^{y} f_2(t) dt|
     :param endpoint_a: start point of domain D
     :param endpoint_b: end point of domain D
     :param p: probability list
@@ -76,4 +78,28 @@ def wasserstein_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
             right_integration[i] = (height[i + mid] + height[i + mid - 1]) * l[i + mid] / 2
 
     res = sum(left_integration) + (endpoint_b - endpoint_a - x) - sum(right_integration)
+    return res
+
+
+def l2_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
+    """
+    distance = (y - x)^2
+    :param endpoint_a: start point of domain D
+    :param endpoint_b: end point of domain D
+    :param p: probability list
+    :param l: interval endpoint list
+    :param x: true data (private data)
+    :param total_piece: piece number
+    :return: distance (error)
+    """
+    mid = (total_piece - 1) // 2
+    assert endpoint_a <= x <= endpoint_b
+    assert (l[mid] <= x <= l[mid + 1])
+    assert (len(p) + 1 == len(l))
+
+    obj_tmp = np.zeros(total_piece + 1)
+    for i in range(total_piece):
+        obj_tmp[i] = (l[i + 1] - x) ** 3 - (l[i] - x) ** 3
+
+    res = sum(obj_tmp[i] * p[i] * (1 / 3) for i in range(total_piece))
     return res

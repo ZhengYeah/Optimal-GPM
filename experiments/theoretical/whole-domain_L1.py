@@ -6,7 +6,7 @@ from src.distance_metric import l1_distance
 from src.min_error_mechanism import MinL1Mechanism
 
 
-epsilon = 1
+epsilon = 4
 endpoint_a, endpoint_b = 0, 1
 total_piece = 3
 x = np.linspace(0, 1, 29, endpoint=False)

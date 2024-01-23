@@ -32,6 +32,7 @@ class MinErrorMechanism(object):
 class MinL1Mechanism(MinErrorMechanism):
     def __init__(self, endpoint_a, endpoint_b, epsilon, total_piece, probabilities=None):
         """
+        distance = |y - x|
         :param endpoint_a: left endpoint of the bound
         :param endpoint_b: right endpoint of the bound
         :param epsilon: privacy budget
@@ -158,17 +159,11 @@ class MinL1Mechanism(MinErrorMechanism):
 
         return l.X, m_2.objVal
 
-    def endpoints_to_lengths(self, endpoints):
-        assert len(endpoints) == self.total_piece + 1
-        res = np.zeros(len(endpoints) - 1)
-        for i in range(len(endpoints) - 1):
-            res[i] = endpoints[i + 1] - endpoints[i]
-        return res
-
 
 class MinWassersteinMechanism(MinErrorMechanism):
     def __init__(self, endpoint_a, endpoint_b, epsilon, total_piece, probabilities=None):
         """
+        distance = |\int_{a}^{y} f_1(t) dt - \int_{a}^{y} f_2(t) dt|
         :param endpoint_a: left endpoint of the bound
         :param endpoint_b: right endpoint of the bound
         :param epsilon: privacy budget
@@ -309,5 +304,123 @@ class MinWassersteinMechanism(MinErrorMechanism):
 
         # for v in m_2.getVars():
         #     print(v, v.x)
+
+        return l.X, m_2.objVal
+
+
+class MinL2Mechanism(MinErrorMechanism):
+    def __init__(self, endpoint_a, endpoint_b, epsilon, total_piece, probabilities=None):
+        """
+        distance = (y - x)^2
+        :param endpoint_a: left endpoint of the bound
+        :param endpoint_b: right endpoint of the bound
+        :param epsilon: privacy budget
+        :param total_piece: piece number
+        :param probabilities: optimal probability list
+        """
+        super().__init__()
+        assert endpoint_a < endpoint_b
+        self.endpoint_a, self.endpoint_b = endpoint_a, endpoint_b
+        self.epsilon = epsilon
+        self.total_piece = total_piece
+        self.probabilities = probabilities
+
+    def solve_probabilities(self):
+        mid = (self.total_piece - 1) // 2
+        m_1 = gp.Model("Quadratic Non-convex")
+        m_1.Params.LogToConsole = 0
+
+        # l_i: interval end-points
+        # p_i: probability of piece i
+
+        l = m_1.addMVar(shape=self.total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="l")
+        p = m_1.addMVar(shape=self.total_piece, lb=0, vtype=GRB.CONTINUOUS, name="p")
+
+        m_1.addConstr(p[0] >= p[mid] / math.exp(self.epsilon), name="cons_2")
+        m_1.addConstr(p[self.total_piece - 1] >= p[mid] / math.exp(self.epsilon), name="cons_2")
+        for i in range(mid):
+            m_1.addConstr(p[i] <= p[i + 1], name="cons_2")
+        for i in range(mid + 1, self.total_piece):
+            m_1.addConstr(p[i - 1] >= p[i], name="cons_2")
+
+        m_1.addConstr(l[0] == self.endpoint_a, name="cons_3")
+        m_1.addConstr(l[self.total_piece] == self.endpoint_b, name="cons_3")
+        for i in range(self.total_piece):
+            m_1.addConstr(l[i] <= l[i + 1], name="cons_3")
+        m_1.addConstr(sum((l[i + 1] - l[i]) * p[i] for i in range(self.total_piece)) == 1, name="cons_3")
+        # worst-case error
+        m_1.addConstr(l[mid] <= self.endpoint_a, name="cons_3")
+        m_1.addConstr(self.endpoint_a <= l[mid + 1], name="cons_3")
+
+        # bilinear encoding (Gurobi does not support 3-order variable multiplication)
+        var_tmp = m_1.addMVar(shape=self.total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="obj_i")
+        for i in range(self.total_piece + 1):
+            m_1.addConstr(var_tmp[i] == (l[i] - self.endpoint_a) * (l[i] - self.endpoint_a), name="cons_4")
+        var_tmp_2 = m_1.addMVar(shape=self.total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="obj_i")
+        for i in range(self.total_piece + 1):
+            m_1.addConstr(var_tmp_2[i] == var_tmp[i] * (l[i] - self.endpoint_a), name="cons_4")
+
+        # encoding proved correct
+        obj = m_1.addVar(lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="obj")
+        m_1.addConstr(obj == sum((var_tmp_2[i + 1] - var_tmp_2[i]) * p[i] * (1 / 3) for i in range(self.total_piece)), name="obj")
+
+        m_1.setObjective(obj, GRB.MINIMIZE)
+
+        m_1.setParam("NonConvex", 2)
+        m_1.optimize()
+
+        # for v in m_1.getVars():
+        #     print(v, v.x)
+
+        # m_1.computeIIS()
+        # m_1.write("debug.ilp")
+
+        self.probabilities = p.X
+        for i in range(mid):
+            self.probabilities[i] = p.X[self.total_piece - 1 - i]
+        return p.X, l.X, m_1.objVal
+
+    def solve_lr(self, x):
+        p = self.probabilities
+        assert len(p) == self.total_piece
+
+        mid = (self.total_piece - 1) // 2
+        m_2 = gp.Model("Quadratic Non-convex 2")
+        m_2.Params.LogToConsole = 0
+
+        # l_i: interval end-points
+        l = m_2.addMVar(shape=self.total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="l")
+
+        m_2.addConstr(l[0] == self.endpoint_a, name="cons_3")
+        m_2.addConstr(l[self.total_piece] == self.endpoint_b, name="cons_3")
+        for i in range(self.total_piece):
+            m_2.addConstr(l[i] <= l[i + 1], name="cons_3")
+        m_2.addConstr(sum((l[i + 1] - l[i]) * p[i] for i in range(self.total_piece)) == 1, name="cons_3")
+        m_2.addConstr(l[mid] <= x, name="cons_3")
+        m_2.addConstr(x <= l[mid + 1], name="cons_3")
+
+        # bilinear encoding (Gurobi does not support 3-order variable multiplication)
+        var_tmp = m_2.addMVar(shape=self.total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="obj_i")
+        for i in range(self.total_piece + 1):
+            m_2.addConstr(var_tmp[i] == (l[i] - x) * (l[i] - x), name="cons_4")
+        var_tmp_2 = m_2.addMVar(shape=self.total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="obj_i")
+        for i in range(self.total_piece + 1):
+            m_2.addConstr(var_tmp_2[i] == var_tmp[i] * (l[i] - x), name="cons_4")
+
+        # encoding proved correct
+        obj = m_2.addVar(lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="obj")
+        m_2.addConstr(obj == sum((var_tmp_2[i + 1] - var_tmp_2[i]) * p[i] * (1 / 3) for i in range(self.total_piece)),
+                      name="obj")
+
+        m_2.setObjective(obj, GRB.MINIMIZE)
+
+        m_2.setParam("NonConvex", 2)
+        m_2.optimize()
+
+        # for v in m_1.getVars():
+        #     print(v, v.x)
+
+        # m_1.computeIIS()
+        # m_1.write("debug.ilp")
 
         return l.X, m_2.objVal

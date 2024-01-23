@@ -1,5 +1,6 @@
 import math
 from src.min_error_mechanism import MinL1Mechanism
+from src.utilities import endpoints_to_lengths
 
 x = 0.16
 for i in range(3, 4):
@@ -9,7 +10,7 @@ for i in range(3, 4):
     print(f"Probability List: {piece_i.probabilities}")
     l_list = piece_i.solve_lr(x)[0]
     L1_error = piece_i.solve_lr(x)[1]
-    lengths_list = piece_i.endpoints_to_lengths(l_list)
+    lengths_list = endpoints_to_lengths(l_list)
     print(f"Interval Lengths List: {lengths_list}")
     print(f"L1 error: {L1_error}")
 

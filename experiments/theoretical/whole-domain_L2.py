@@ -2,8 +2,8 @@ import numpy as np
 import csv
 from SW import SW_on_01
 from PM import PM_on_01
-from src.distance_metric import wasserstein_distance
-from src.min_error_mechanism import MinWassersteinMechanism
+from src.distance_metric import l2_distance
+from src.min_error_mechanism import MinL2Mechanism
 
 
 epsilon = 4
@@ -18,18 +18,18 @@ distance_optimal = np.zeros((len(x)))
 for i, _ in enumerate(x):
     # SW
     p, l = SW_on_01(epsilon, x[i])
-    distance_SW[i] = wasserstein_distance(endpoint_a, endpoint_b, total_piece, p, l, x[i])
+    distance_SW[i] = l2_distance(endpoint_a, endpoint_b, total_piece, p, l, x[i])
     # PM
     p, l = PM_on_01(epsilon, x[i])
-    distance_PM[i] = wasserstein_distance(endpoint_a, endpoint_b, total_piece, p, l, x[i])
+    distance_PM[i] = l2_distance(endpoint_a, endpoint_b, total_piece, p, l, x[i])
     # optimal
-    opt_PM = MinWassersteinMechanism(endpoint_a, endpoint_b, epsilon, total_piece)
+    opt_PM = MinL2Mechanism(endpoint_a, endpoint_b, epsilon, total_piece)
     opt_PM.solve_probabilities()
     distance_optimal[i] = opt_PM.solve_lr(x[i])[1]
 
 
 fields = ["x", "SW", "PM", "Optimal"]
-filename = "whole-domain_wasserstein.csv"
+filename = "whole-domain_L2.csv"
 with open(filename, "w", newline='') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(fields)
