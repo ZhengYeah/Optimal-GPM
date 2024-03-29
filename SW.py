@@ -66,15 +66,17 @@ if __name__ == "__main__":
     # x = np.linspace(0, 1, 10, endpoint=False)
     x = [0.5]
     for i, _ in enumerate(x):
-        # interval_probability, interval_endpoint = SW_on_01(1, x[i])
+        interval_probability, interval_endpoint = SW_on_01(1, x[i])
         # interval_probability_2, interval_endpoint_2 = SW_on_D(0, 1, 1, x[i])
-        # distance = l1_distance(0, 1, 3, interval_probability, interval_endpoint, x[i])
+        distance = l1_distance(0, 1, 3, interval_probability, interval_endpoint, x[i])
         # distance_2 = l1_distance(0, 1, 3, interval_probability_2, interval_endpoint_2, x[i])
+        print(interval_probability, interval_endpoint)
+
         # print(f"L_1 distance: {distance}")
         # print(f"L_1 distance 2: {distance_2}")
 
-        interval_probability_3, interval_endpoint_3 = SW(4, x[i])
-        distance_3 = l2_distance(0, 1, 3, interval_probability_3, interval_endpoint_3, x[i])
-        print(interval_probability_3, interval_endpoint_3)
-        print(f"L_1 distance: {distance_3}")
+        # interval_probability_3, interval_endpoint_3 = SW(4, x[i])
+        # distance_3 = l2_distance(0, 1, 3, interval_probability_3, interval_endpoint_3, x[i])
+        # print(interval_probability_3, interval_endpoint_3)
+        # print(f"L_1 distance: {distance_3}")
 

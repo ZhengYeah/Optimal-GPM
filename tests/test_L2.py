@@ -1,9 +1,9 @@
-from src.min_error_mechanism import MinL2Mechanism
+from src.min_error_mechanism import MinL1Mechanism
 from src.utilities import endpoints_to_lengths
 
 x = 0
-for i in range(3, 5):
-    piece_i = MinL2Mechanism(endpoint_a=0, endpoint_b=1, epsilon=1, total_piece=i)
+for i in range(3, 4):
+    piece_i = MinL1Mechanism(endpoint_a=0, endpoint_b=1, epsilon=2, total_piece=i)
     print(f"Piece number = {i}")
     piece_i.solve_probabilities()
     print(f"Probability List: {piece_i.probabilities}")

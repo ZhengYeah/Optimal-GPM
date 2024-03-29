@@ -11,7 +11,7 @@ in_endpoint_a, in_endpoint_b = -1, 1
 l = PM_on_C(epsilon, in_endpoint_a)[1]
 out_endpoint_a, out_endpoint_b = l[0], l[-1]
 total_piece = 3
-x = np.linspace(0, 1, 29, endpoint=False)
+x = np.linspace(-1, 1, 29, endpoint=False)
 
 distance_SW = np.zeros(len(x))
 distance_PM = np.zeros(len(x))
