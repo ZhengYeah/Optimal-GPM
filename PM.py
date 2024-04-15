@@ -11,10 +11,12 @@ def in_machine_error(result, expectation):
 
 
 def PM_on_D(endpoint_a, endpoint_b, epsilon, input_x):
+    """
+    [endpoint_a, endpoint_b) -> [endpoint_a, endpoint_b)
+    """
     assert (endpoint_a <= input_x <= endpoint_b)
     D_len = endpoint_b - endpoint_a
-    # input mapping to PM's [-1, 1]
-    x = input_x
+    # input mapping to PM's [-1, 1], = (x - D_len / 2) / (D / 2)
     input_x = 2 * input_x / D_len - 1
 
     # [-C,C]-PM
@@ -40,9 +42,11 @@ def PM_on_D(endpoint_a, endpoint_b, epsilon, input_x):
 
 
 def PM_on_01(epsilon, input_x):
+    """
+    [0, 1) -> [0, 1)
+    """
     assert (0 <= input_x <= 1)
     # input mapping
-    x = input_x
     input_x = (input_x - 0.5) * 2
 
     # [-C,C]-PM
@@ -68,6 +72,9 @@ def PM_on_01(epsilon, input_x):
 
 
 def PM_on_C(epsilon, input_x):
+    """
+    [-1, 1) -> [-C, C)
+    """
     assert (-1 <= input_x <= 1)
     C = (math.exp(epsilon / 2) + 1) / (math.exp(epsilon / 2) - 1)
     center_probability = (math.exp(epsilon) - math.exp(epsilon / 2)) / (2 * math.exp(epsilon / 2) + 2)

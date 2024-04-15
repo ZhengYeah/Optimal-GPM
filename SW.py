@@ -11,10 +11,15 @@ def in_machine_error(result, expectation):
 
 
 def SW_on_D(endpoint_a, endpoint_b, epsilon, input_x):
+    """
+    [endpoint_a, endpoint_b) -> [endpoint_a, endpoint_b)
+    """
     assert (endpoint_a <= input_x <= endpoint_b)
     D_len = endpoint_b - endpoint_a
+    # input mapping to SW's [0, 1] input
+    input_x = (input_x - endpoint_a) / D_len
 
-    # SW's [-b, 1+b]
+    # SW's original [-b, 1+b]
     b = (epsilon * math.exp(epsilon) - math.exp(epsilon) + 1) / (2 * math.exp(epsilon) * (math.exp(epsilon) - 1 - epsilon))
     central_probability = math.exp(epsilon) / (2 * b * math.exp(epsilon) + 1)
     left_right_probability = 1 / (2 * b * math.exp(epsilon) + 1)
@@ -22,7 +27,7 @@ def SW_on_D(endpoint_a, endpoint_b, epsilon, input_x):
     # D-SW
     central_probability = central_probability * (1 + 2 * b) / D_len
     left_right_probability = left_right_probability * (1 + 2 * b) / D_len
-    # 这里 domain 变换很容易出错，注意写 assertion 测试
+    # 这里 domain 变换很容易出错，注意写 assertion 测试 input_x 在 central interval 上
     left_t = input_x * D_len / (1 + 2 * b) + endpoint_a
     right_t = (input_x + 2 * b) * D_len / (1 + 2 * b) + endpoint_a
     left_t = in_machine_error(left_t, endpoint_a)
@@ -35,6 +40,9 @@ def SW_on_D(endpoint_a, endpoint_b, epsilon, input_x):
 
 
 def SW_on_01(epsilon, input_x):
+    """
+    [0, 1) -> [0, 1)
+    """
     assert (0 <= input_x <= 1)
     b = (epsilon * math.exp(epsilon) - math.exp(epsilon) + 1) / (2 * math.exp(epsilon) * (math.exp(epsilon) - 1 - epsilon))
     central_probability = math.exp(epsilon) / (2 * b * math.exp(epsilon) + 1)
@@ -54,6 +62,9 @@ def SW_on_01(epsilon, input_x):
 
 
 def SW(epsilon, input_x):
+    """
+    [0, 1) -> [-b, 1+b]
+    """
     assert (0 <= input_x <= 1)
     b = (epsilon * math.exp(epsilon) - math.exp(epsilon) + 1) / (2 * math.exp(epsilon) * (math.exp(epsilon) - 1 - epsilon))
     central_probability = math.exp(epsilon) / (2 * b * math.exp(epsilon) + 1)
