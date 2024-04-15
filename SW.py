@@ -33,6 +33,7 @@ def SW_on_D(endpoint_a, endpoint_b, epsilon, input_x):
     # print(f"Interval probability: [{interval_probability}]")
     return interval_probability, interval_endpoint
 
+
 def SW_on_01(epsilon, input_x):
     assert (0 <= input_x <= 1)
     b = (epsilon * math.exp(epsilon) - math.exp(epsilon) + 1) / (2 * math.exp(epsilon) * (math.exp(epsilon) - 1 - epsilon))
