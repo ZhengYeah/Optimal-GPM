@@ -27,7 +27,7 @@ for i, _ in enumerate(epsilon):
     distance_optimal[i] = opt_PM.solve_lr(x=3.14)[1]
 
 fields = ["Epsilon", "SW", "PM", "Optimal"]
-filename = "worst-case_circular_l1.csv"
+filename = "worst-case_circular_L1.csv"
 with open(filename, "w", newline='') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(fields)
