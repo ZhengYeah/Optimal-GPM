@@ -27,6 +27,7 @@ def SW_on_D(endpoint_a, endpoint_b, epsilon, input_x):
     # D-SW
     central_probability = central_probability * (1 + 2 * b) / D_len
     left_right_probability = left_right_probability * (1 + 2 * b) / D_len
+    assert left_right_probability >= central_probability / math.exp(epsilon) - np.finfo(float).eps
     # 这里 domain 变换很容易出错，注意写 assertion 测试 input_x 在 central interval 上
     left_t = input_x * D_len / (1 + 2 * b) + endpoint_a
     right_t = (input_x + 2 * b) * D_len / (1 + 2 * b) + endpoint_a
@@ -76,19 +77,20 @@ def SW(epsilon, input_x):
 
 if __name__ == "__main__":
     # x = np.linspace(0, 1, 10, endpoint=False)
-    x = [0.5]
-    for i, _ in enumerate(x):
-        interval_probability, interval_endpoint = SW_on_01(1, x[i])
-        # interval_probability_2, interval_endpoint_2 = SW_on_D(0, 1, 1, x[i])
-        distance = l1_distance(0, 1, 3, interval_probability, interval_endpoint, x[i])
-        # distance_2 = l1_distance(0, 1, 3, interval_probability_2, interval_endpoint_2, x[i])
-        print(interval_probability, interval_endpoint)
-
-        # print(f"L_1 distance: {distance}")
-        # print(f"L_1 distance 2: {distance_2}")
-
-        # interval_probability_3, interval_endpoint_3 = SW(4, x[i])
-        # distance_3 = l2_distance(0, 1, 3, interval_probability_3, interval_endpoint_3, x[i])
-        # print(interval_probability_3, interval_endpoint_3)
-        # print(f"L_1 distance: {distance_3}")
+    # x = [0.5]
+    # for i, _ in enumerate(x):
+    #     interval_probability, interval_endpoint = SW_on_01(1, x[i])
+    #     # interval_probability_2, interval_endpoint_2 = SW_on_D(0, 1, 1, x[i])
+    #     distance = l1_distance(0, 1, 3, interval_probability, interval_endpoint, x[i])
+    #     # distance_2 = l1_distance(0, 1, 3, interval_probability_2, interval_endpoint_2, x[i])
+    #     print(interval_probability, interval_endpoint)
+    #
+    #     # print(f"L_1 distance: {distance}")
+    #     # print(f"L_1 distance 2: {distance_2}")
+    #
+    #     # interval_probability_3, interval_endpoint_3 = SW(4, x[i])
+    #     # distance_3 = l2_distance(0, 1, 3, interval_probability_3, interval_endpoint_3, x[i])
+    #     # print(interval_probability_3, interval_endpoint_3)
+    #     # print(f"L_1 distance: {distance_3}")
+    print(SW_on_D(0, 6.28, 50, 3.14))
 

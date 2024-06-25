@@ -1,3 +1,4 @@
+center_cam,left_cam,right_cam,steering_angle,throttle,reverse,speed
 C:\Users\Andy\Desktop\self_driving_car_dataset_jungle\IMG\center_2022_04_10_12_44_27_913.jpg,C:\Users\Andy\Desktop\self_driving_car_dataset_jungle\IMG\left_2022_04_10_12_44_27_913.jpg,C:\Users\Andy\Desktop\self_driving_car_dataset_jungle\IMG\right_2022_04_10_12_44_27_913.jpg,0,1,0,21.69488
 C:\Users\Andy\Desktop\self_driving_car_dataset_jungle\IMG\center_2022_04_10_12_44_27_983.jpg,C:\Users\Andy\Desktop\self_driving_car_dataset_jungle\IMG\left_2022_04_10_12_44_27_983.jpg,C:\Users\Andy\Desktop\self_driving_car_dataset_jungle\IMG\right_2022_04_10_12_44_27_983.jpg,0,1,0,22.50011
 C:\Users\Andy\Desktop\self_driving_car_dataset_jungle\IMG\center_2022_04_10_12_44_28_052.jpg,C:\Users\Andy\Desktop\self_driving_car_dataset_jungle\IMG\left_2022_04_10_12_44_28_052.jpg,C:\Users\Andy\Desktop\self_driving_car_dataset_jungle\IMG\right_2022_04_10_12_44_28_052.jpg,0,1,0,23.11461
