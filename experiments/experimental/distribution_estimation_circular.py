@@ -34,7 +34,7 @@ steering_gpm = np.zeros(len(steering))
 for i, angle in enumerate(steering):
     bias = pi - angle
     sample = sampling_from_cdf(cdf, endpoints)
-    steering_gpm[i] = (sample - bias + 10e4 * np.finfo(float).eps) % (2 * pi)
+    steering_gpm[i] = (sample - bias + np.finfo(float).eps) % (2 * pi)
 # plot histogram (noisy)
 gpm_hist, _ = np.histogram(steering_gpm, bins=bins)
 plt.bar(bins[:-1], gpm_hist, width=2*pi/n_bins, align='edge')
