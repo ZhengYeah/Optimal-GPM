@@ -10,6 +10,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\experiments\experimental\mean_classical_domain.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\experiments\experimental\motion_sense_dws_1\sub_1.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\experiments\theoretical\whole-domain_L1.csv">
           <value>
             <Attribute>

@@ -1,52 +1,65 @@
 import pandas as pd
 import numpy as np
-from src.closed_form_mechanism import circular_mechanism_pi
+from multiprocessing import Pool
+from src.closed_form_mechanism import classical_mechanism_01
 from src.utilities import pdf_to_cdf, sampling_from_cdf
-import SW
-import matplotlib.pyplot as plt
-
-pi = 3.14
-epsilon = 50
-
-# read data form csv
-data = pd.read_csv('driving_log.csv')
-steering = data['steering_angle']
-steering = steering.values
-
-# map steering angles to unit circle
-steering = steering * pi
-steering = steering % (2 * pi)
-# create bins
-n_bins = 20
-bins = np.linspace(0, 2*pi, n_bins, endpoint=False)
-
-# plot histogram (ground truth)
-gt_hist, gt_bin_edges = np.histogram(steering, bins=bins)
-plt.bar(bins[:-1], gt_hist, width=2*pi/n_bins, align='edge')
-plt.show()
+import SW, PM
 
 
-# estimate distribution (GPM)
-p, endpoints = circular_mechanism_pi(epsilon)  # p and endpoints at pi
-cdf = pdf_to_cdf(p, endpoints)
-steering_gpm = np.zeros(len(steering))
-for i, angle in enumerate(steering):
-    bias = pi - angle
-    sample = sampling_from_cdf(cdf, endpoints)
-    steering_gpm[i] = (sample - bias) % (2 * pi)
-# plot histogram (noisy)
-gpm_hist, _ = np.histogram(steering_gpm, bins=bins)
-plt.bar(bins[:-1], gpm_hist, width=2*pi/n_bins, align='edge')
-plt.show()
+def compare_mechanisms(epsilon, data):
+    """
+    one-round comparison
+    :param data: [0,1] data array
+    """
+    gt_mean = np.mean(data)
 
-# estimate distribution (SW)
-steering_sw = np.zeros(len(steering))
-for i, angle in enumerate(steering):
-    p, endpoints = SW.SW_on_D(0, 2*pi, epsilon, angle)
-    cdf = pdf_to_cdf(p, endpoints)
-    sample = sampling_from_cdf(cdf, endpoints)
-    steering_sw[i] = sample
-# plot histogram (noisy)
-sw_hist, _ = np.histogram(steering_sw, bins=bins)
-plt.bar(bins[:-1], sw_hist, width=2*pi/n_bins, align='edge')
-plt.show()
+    # estimate mean (GPM)
+    acceleration_gpm = np.zeros(len(data))
+    for i, acce_value in enumerate(data):
+        p, endpoints = classical_mechanism_01(epsilon, acce_value)
+        cdf = pdf_to_cdf(p, endpoints)
+        acceleration_gpm[i] = sampling_from_cdf(cdf, endpoints)
+    gpm_mean = np.mean(acceleration_gpm)
+
+    # estimate mean (PM)
+    acceleration_pm = np.zeros(len(data))
+    for i, acce_value in enumerate(data):
+        p, endpoints = PM.PM_on_01(epsilon, acce_value)
+        cdf = pdf_to_cdf(p, endpoints)
+        acceleration_pm[i] = sampling_from_cdf(cdf, endpoints)
+    pm_mean = np.mean(acceleration_pm)
+
+    # estimate mean (SW)
+    acceleration_sw = np.zeros(len(data))
+    for i, acce_value in enumerate(data):
+        p, endpoints = SW.SW_on_01(epsilon, acce_value)
+        cdf = pdf_to_cdf(p, endpoints)
+        acceleration_sw[i] = sampling_from_cdf(cdf, endpoints)
+    sw_mean = np.mean(acceleration_sw)
+
+    return gt_mean, gpm_mean, pm_mean, sw_mean
+
+
+if __name__ == '__main__':
+    epsilon_list = range(1, 8)
+    test_times = 100
+
+    # read data form csv
+    data = pd.read_csv('./motion_sense_dws_1/sub_1.csv')
+    acceleration = data['userAcceleration.x']
+    acceleration = acceleration.values
+    print(f"Length of acceleration: {len(acceleration)}")
+    print(f"Max acceleration: {max(acceleration)}, Min acceleration: {min(acceleration)}")
+    # normalize to [0, 1]
+    acceleration = (acceleration - min(acceleration)) / (max(acceleration) - min(acceleration))
+    results_epsilon = np.zeros((len(epsilon_list), 4))
+    for i, epsilon in enumerate(epsilon_list):
+        print(f"epsilon: {epsilon}")
+        # parallel processing
+        pool = Pool(processes=8)
+        results = pool.starmap(compare_mechanisms, [(epsilon, acceleration)] * test_times)
+        results = np.array(results)
+        results_epsilon[i] = np.mean(results, axis=0)
+
+    # save to csv
+    np.savetxt('mean_classical_domain.csv', results_epsilon, delimiter=',')

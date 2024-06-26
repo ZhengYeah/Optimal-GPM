@@ -8,7 +8,7 @@ pi = 3.14
 epsilon = 6
 
 # read data form csv
-data = pd.read_csv('driving_log.csv')
+data = pd.read_csv('self_driving_car/driving_log.csv')
 steering = data['steering_angle']
 steering = steering.values
 print(f"Length of steering: {len(steering)}")
