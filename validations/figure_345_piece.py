@@ -12,4 +12,3 @@ for i in range(9, 19):
     lengths_list = endpoints_to_lengths(l_list)
     print(f"Interval Lengths List: {lengths_list}")
     print(f"L1 error: {L1_error}")
-

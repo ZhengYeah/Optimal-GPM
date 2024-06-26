@@ -27,18 +27,18 @@ plt.show()
 
 
 # Load data
-data = pd.read_csv('./worst-case_L2.csv')
+data = pd.read_csv('./distribution_classical_domain.csv')
 plt.figure(figsize=(5, 4))
 plt.plot(data['Epsilon'], data['SW'], label='SW', linewidth=2, linestyle='--', color=[0, 0, 0])
 plt.plot(data['Epsilon'], data['PM'], label='PM',linewidth=2, linestyle='-', color=[0, 0, 1], marker='+', markersize=8)
-plt.plot(data['Epsilon'], data['Optimal'], label='GPM', linewidth=2, linestyle='-', color=[1, 0, 0])
+plt.plot(data['Epsilon'], data['GPM'], label='GPM', linewidth=2, linestyle='-', color=[1, 0, 0])
 plt.xlabel(r'Privacy parameter $\varepsilon$')
-plt.ylabel(r'Worst-case square error')
+plt.ylabel(r'Distribution estimation error')
 plt.xticks(np.arange(1, 9, 1))
-plt.yticks(np.arange(0, 0.25, 0.1))
+# plt.yticks(np.arange(0, 0.25, 0.1))
 plt.legend(loc='upper right')
 plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%g'))
 plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%g'))
 
-plt.savefig('worst-case_L2.pdf', bbox_inches='tight')
+plt.savefig('distribution_classical_domain.pdf', bbox_inches='tight')
 plt.show()

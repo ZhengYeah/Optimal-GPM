@@ -51,6 +51,7 @@ def SW_on_01(epsilon, input_x):
 
     central_probability = central_probability * (1 + 2 * b)
     left_right_probability = left_right_probability * (1 + 2 * b)
+    assert left_right_probability >= central_probability / math.exp(epsilon) - np.finfo(float).eps
     left_t = input_x / (1 + 2 * b)
     right_t = (input_x + 2 * b) / (1 + 2 * b)
     left_t = in_machine_error(left_t, 0)
