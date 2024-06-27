@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib.ticker import FormatStrFormatter, FuncFormatter
+from matplotlib.ticker import FormatStrFormatter
 
 
 plt.rcParams['text.usetex'] = True
