@@ -5,6 +5,8 @@ A piecewise mechanism is instantiated by:
 * epsilon: privacy budget
 * total piece: number of pieces
 
-File `min_error_mechanism` is the class of solving the optimal piecewise mechanism under different distance metrics.
+File `min_error_mechanism` contains the class of solving the optimal piecewise mechanism under different distance metrics.
 
-File `distance_metric` is the methods of calculating different distance.
+File `distance_metric` contains the methods of calculating different distance.
+
+File `closed-form` contains the closed-form solution of the optimal piecewise mechanism under absolute error (maybe also optimal for other metrics).

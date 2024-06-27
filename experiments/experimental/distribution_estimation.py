@@ -48,18 +48,27 @@ def compare_mechanisms(epsilon, data, n_bins):
 
 
 if __name__ == '__main__':
-    epsilon_list = range(1, 9)
-    n_bins = 100
+    epsilon_list = np.linspace(1, 8, 15, endpoint=True)
+    n_bins = 50
     test_times = 500
 
     # read data form csv
-    data = pd.read_csv('./motion_sense_dws_1/sub_1.csv')
+    data_1 = pd.read_csv('./motion_sense_dws_1/sub_1.csv')
+    data_2 = pd.read_csv('./motion_sense_dws_1/sub_2.csv')
+    data_3 = pd.read_csv('./motion_sense_dws_1/sub_3.csv')
+    data = pd.concat([data_1, data_2, data_3])
+
     acceleration = data['userAcceleration.x']
     acceleration = acceleration.values
     print(f"Length of acceleration: {len(acceleration)}")
     print(f"Max acceleration: {max(acceleration)}, Min acceleration: {min(acceleration)}")
     # normalize to [0, 1]
     acceleration = (acceleration - min(acceleration)) / (max(acceleration) - min(acceleration))
+    # # plot histogram
+    # bins = np.linspace(0, 1, n_bins, endpoint=True)
+    # gt_hist, _ = np.histogram(acceleration, bins=bins)
+    # plt.bar(bins[:-1], gt_hist, width=1/n_bins, align='edge')
+    # plt.show()
 
     results_epsilon = np.zeros((len(epsilon_list), 3))
     for i, epsilon in enumerate(epsilon_list):

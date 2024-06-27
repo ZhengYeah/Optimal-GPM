@@ -33,6 +33,7 @@ def PM_on_D(endpoint_a, endpoint_b, epsilon, input_x):
     right_t = in_machine_error(right_t, endpoint_b)
     left_right_probability = left_right_probability * (2 * C) / D_len
     center_probability = center_probability * (2 * C) / D_len
+    assert left_right_probability >= center_probability / math.exp(epsilon) - np.finfo(float).eps
 
     interval_endpoint = [endpoint_a, left_t, right_t, endpoint_b]
     interval_probability = [left_right_probability, center_probability, left_right_probability]
