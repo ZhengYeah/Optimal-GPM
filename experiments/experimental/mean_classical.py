@@ -80,4 +80,4 @@ if __name__ == '__main__':
     assert len(epsilon_list) == error.shape[0]
     epsilon_list = np.array(epsilon_list)
     error = np.concatenate([epsilon_list.reshape(-1, 1), error], axis=1)
-    np.savetxt('mean_classical_domain.csv', error, delimiter=',', header='Epsilon,GT,GPM,UB_GPM,PM,SW', comments='')
+    np.savetxt('mean_classical.csv', error, delimiter=',', header='Epsilon,GT,GPM,UB_GPM,PM,SW', comments='')

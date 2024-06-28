@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\experiments\experimental\distribution_classical.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\experiments\experimental\distribution_classical_domain.csv">
           <value>
             <Attribute>
@@ -17,7 +24,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\experiments\experimental\mean_classical.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\experiments\experimental\mean_classical_domain.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\experiments\experimental\mean_classical_for_ubgpm.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

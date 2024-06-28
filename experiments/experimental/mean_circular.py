@@ -95,4 +95,4 @@ if __name__ == '__main__':
     df['GPM'] = error_epsilon[:, 1]
     df['PM'] = error_epsilon[:, 2]
     df['SW'] = error_epsilon[:, 3]
-    df.to_csv('mean_estimation_circular.csv', index=False)
+    df.to_csv('mean_circular.csv', index=False)

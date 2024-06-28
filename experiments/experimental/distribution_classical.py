@@ -95,4 +95,4 @@ if __name__ == '__main__':
     epsilon_list = np.array(epsilon_list)
     assert results_epsilon.shape[0] == epsilon_list.shape[0]
     results = np.hstack((epsilon_list.reshape(-1, 1), results_epsilon))
-    np.savetxt('distribution_classical_domain.csv', results, delimiter=',', header='Epsilon,GPM,PM,SW', comments='')
+    np.savetxt('distribution_classical.csv', results, delimiter=',', header='Epsilon,GPM,PM,SW', comments='')

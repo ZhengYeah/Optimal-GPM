@@ -50,7 +50,7 @@ def compare_mechanisms(epsilon, steering, n_bins):
 if __name__ == '__main__':
     epsilon_list = np.linspace(1, 8, 15, endpoint=True)
     n_bins = 50
-    test_times = 500
+    test_times = 2000
 
     # read data form csv
     data_1 = pd.read_csv('motion_sense_dws_1/sub_1.csv')
