@@ -31,20 +31,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\experiments\experimental\mean_classical_domain.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\experiments\experimental\mean_classical_for_ubgpm.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\experiments\experimental\mean_estimation_circular.csv">
           <value>
             <Attribute>
