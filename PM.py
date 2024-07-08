@@ -72,6 +72,35 @@ def PM_on_01(epsilon, input_x):
     return interval_probability, interval_endpoint
 
 
+def PM_trans_01(epsilon, input_x):
+    """
+    [0, 1) -> [-C/2 + 1/2, C/2 + 1/2)
+    """
+    assert (0 <= input_x <= 1)
+    # input mapping
+    input_x = (input_x - 0.5) * 2
+
+    # [-C,C]-PM
+    C = (math.exp(epsilon / 2) + 1) / (math.exp(epsilon / 2) - 1)
+    center_probability = (math.exp(epsilon) - math.exp(epsilon / 2)) / (2 * math.exp(epsilon / 2) + 2)
+    left_right_probability = center_probability / math.exp(epsilon)
+    left_t = (C + 1) / 2 * input_x - (C - 1) / 2
+    right_t = left_t + C - 1
+
+    # PM_trans_01
+    left_t = left_t / 2 + 0.5
+    right_t = right_t / 2 + 0.5
+    left_t = in_machine_error(left_t, -C/2 + 1/2)
+    right_t = in_machine_error(right_t, C/2 + 1/2)
+    left_right_probability = left_right_probability * 2
+    center_probability = center_probability * 2
+
+    interval_endpoint = [-C/2 + 1/2, left_t, right_t, C/2 + 1/2]
+    interval_probability = [left_right_probability, center_probability, left_right_probability]
+    # print(f"Interval endpoint: [{interval_endpoint}]")
+    # print(f"Interval probability: [{interval_probability}]")
+    return interval_probability, interval_endpoint
+
 def PM_on_C(epsilon, input_x):
     """
     [-1, 1) -> [-C, C)

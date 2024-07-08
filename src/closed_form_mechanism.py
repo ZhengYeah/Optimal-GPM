@@ -47,5 +47,5 @@ def unbias_gpm(epsilon, x):
     r = (C+1) / 2 * x + (C+1)*(C-1) / (4*C)
     # p and endpoints list
     p_list = [p/math.exp(epsilon), p, p/math.exp(epsilon)]
-    length_list = [0, l, r, 1]
+    length_list = [-C, l, r, 1+C]
     return p_list, length_list

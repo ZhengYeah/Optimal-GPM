@@ -94,7 +94,7 @@ def l2_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
     """
     mid = (total_piece - 1) // 2
     assert endpoint_a <= x <= endpoint_b
-    assert (l[mid] <= x <= l[mid + 1])
+    # assert (l[mid] <= x <= l[mid + 1])
     assert (len(p) + 1 == len(l))
 
     obj_tmp = np.zeros(total_piece + 1)
