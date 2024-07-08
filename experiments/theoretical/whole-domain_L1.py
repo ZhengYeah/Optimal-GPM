@@ -1,7 +1,7 @@
 import numpy as np
 import csv
-from SW import SW_on_01
-from PM import PM_on_01
+from SW import SW_on_01, SW
+from PM import PM_on_01, PM_on_C
 from src.distance_metric import l1_distance
 from src.min_error_mechanism import MinL1Mechanism
 

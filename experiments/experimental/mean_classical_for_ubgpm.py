@@ -27,7 +27,7 @@ def compare_mechanisms(epsilon, data):
 
 if __name__ == '__main__':
     epsilon_list = np.linspace(1, 8, 15, endpoint=True)
-    test_times = 5000
+    test_times = 500
 
     # read data form csv
     data_1 = pd.read_csv('./motion_sense_dws_1/sub_1.csv')

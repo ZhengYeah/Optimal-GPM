@@ -17,13 +17,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\experiments\experimental\distribution_classical_domain.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\experiments\experimental\mean_classical.csv">
           <value>
             <Attribute>
@@ -31,7 +24,7 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\experiments\experimental\mean_estimation_circular.csv">
+        <entry key="\experiments\experimental\mean_classical_for_ubgpm.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -81,6 +74,20 @@
           </value>
         </entry>
         <entry key="\experiments\theoretical\worst-case_circular_l1.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\validations\data.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\validations\p_set.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

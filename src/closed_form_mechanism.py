@@ -43,8 +43,8 @@ def unbias_gpm(epsilon, x):
     assert 0 <= x <= 1
     C = (math.exp(epsilon/2) + 1) / (math.exp(epsilon/2) - 1)
     p = math.exp(epsilon/2) / (2*C+1)
-    l = (C+1) / 2 * x - (2*C+1) / (C-1)
-    r = (C+1) / 2 * x + (2*C+1) / (C-1)
+    l = (C+1) / 2 * x - (3*C+1)*(C-1) / (4*C)
+    r = (C+1) / 2 * x + (C+1)*(C-1) / (4*C)
     # p and endpoints list
     p_list = [p/math.exp(epsilon), p, p/math.exp(epsilon)]
     length_list = [0, l, r, 1]
