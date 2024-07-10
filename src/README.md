@@ -9,4 +9,4 @@ File `min_error_mechanism` contains the class of solving the optimal piecewise m
 
 File `distance_metric` contains the methods of calculating different distance.
 
-File `closed-form` contains the closed-form solution of the optimal piecewise mechanism under absolute error (maybe also optimal for other metrics).
+File `closed_form_mechanism` contains the closed-form solution of the optimal piecewise mechanism under absolute error (maybe also optimal for other metrics).
