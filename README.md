@@ -21,7 +21,7 @@ Now we support the following distance metrics:
 |- validation (validation of the optimal mechanism)
 ```
 
-## Reproducing the results
+## Reproducing the Results
 
 The evaluation section of the paper can be reproduced by running the scripts in the `experiments` folder.
 
