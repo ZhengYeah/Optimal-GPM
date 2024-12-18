@@ -7,7 +7,7 @@ from src.distance_metric import l1_distance
 from src.min_error_mechanism import MinL1Mechanism
 
 
-epsilon = 3
+epsilon = 4
 endpoint_a, endpoint_b = 0, 1
 total_piece = 3
 x = np.linspace(0, 1, 49, endpoint=False)
@@ -42,7 +42,8 @@ for i, _ in enumerate(x):
 
 
 fields = ["x", "SW", "SW-C", "PM", "PM-C", "Unbias-GPM", "Optimal"]
-filename = "whole-domain_L1.csv"
+# file for the given epsilon
+filename = "whole_domain_L1_" + str(epsilon) + ".csv"
 with open(filename, "w", newline='') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(fields)

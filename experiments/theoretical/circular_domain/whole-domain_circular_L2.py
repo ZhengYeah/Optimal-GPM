@@ -6,7 +6,7 @@ from src.distance_metric import l2_distance
 from src.min_error_mechanism import MinL2Mechanism
 
 
-epsilon = 3
+epsilon = 4
 endpoint_a, endpoint_b = 0, 6.28
 total_piece = 3
 x = np.linspace(endpoint_a, endpoint_b, 49, endpoint=False)
@@ -29,7 +29,7 @@ for i, _ in enumerate(x):
 
 
 fields = ["x", "SW", "PM", "Optimal"]
-filename = "whole-domain_circular_L2.csv"
+filename = "whole-domain_circular_L2_epsilon_4.csv"
 with open(filename, "w", newline='') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(fields)

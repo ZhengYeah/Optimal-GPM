@@ -2,8 +2,8 @@ import numpy as np
 import csv
 from SW import SW_on_01
 from PM import PM_on_01
-from src.min_error_mechanism import MinWassersteinMechanism
-from src.distance_metric import wasserstein_distance
+from src.min_error_mechanism import MinL1Mechanism
+from src.distance_metric import l1_distance
 
 
 endpoint_a, endpoint_b = 0, 1
@@ -17,16 +17,16 @@ distance_optimal = np.zeros((len(epsilon)))
 for i, _ in enumerate(epsilon):
     # SW
     p, l = SW_on_01(epsilon[i], 0)
-    distance_SW[i] = wasserstein_distance(endpoint_a, endpoint_b, total_piece, p, l, 0)
+    distance_SW[i] = l1_distance(endpoint_a, endpoint_b, total_piece, p, l, 0)
     # PM
     p, l = PM_on_01(epsilon[i], 0)
-    distance_PM[i] = wasserstein_distance(endpoint_a, endpoint_b, total_piece, p, l, 0)
+    distance_PM[i] = l1_distance(endpoint_a, endpoint_b, total_piece, p, l, 0)
     # optimal
-    opt_PM = MinWassersteinMechanism(endpoint_a, endpoint_b, epsilon[i], total_piece)
+    opt_PM = MinL1Mechanism(endpoint_a, endpoint_b, epsilon[i], total_piece)
     distance_optimal[i] = opt_PM.solve_probabilities()[2]
 
 fields = ["Epsilon", "SW", "PM", "Optimal"]
-filename = "worst-case_Wasserstein.csv"
+filename = "worst-case_L1.csv"
 with open(filename, "w", newline='') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(fields)
