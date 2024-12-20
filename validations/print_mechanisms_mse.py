@@ -3,7 +3,6 @@ import numpy as np
 import SW, PM
 from src.closed_form_mechanism import classical_mechanism_01, circular_mechanism_pi
 from src.distance_metric import l2_distance
-from validations.compare_mse import mse_ogpm_circular
 
 
 def print_mechanisms_01(epsilon, input_x):

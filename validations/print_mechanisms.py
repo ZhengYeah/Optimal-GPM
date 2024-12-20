@@ -40,9 +40,9 @@ def print_distance_01(epsilon, input_x):
 
 
 if __name__ == '__main__':
-    epsilon = 8
-    input_x = 0.4
-    # print_mechanisms_01(epsilon, input_x)
-    # print_distance(epsilon, input_x)
+    epsilon = 1.32
+    input_x = 1
+    print_mechanisms_01(epsilon, input_x)
+    print_distance_01(epsilon, input_x)
 
-    print_mechanisms_2pi(epsilon, input_x)
+    # print_mechanisms_2pi(epsilon, input_x)

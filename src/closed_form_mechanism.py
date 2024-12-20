@@ -8,7 +8,7 @@ def classical_mechanism_01(epsilon, x):
     p = math.exp(epsilon/2)
     if 0 <= x < C:
         l, r = 0, 2 * C
-    elif 1-C <= x < 1:
+    elif 1-C <= x <= 1:
         l, r = 1 - 2 * C, 1
     else:
         l, r = x - C, x + C
@@ -20,7 +20,7 @@ def classical_mechanism_01(epsilon, x):
 
 def circular_mechanism(epsilon, x):
     """
-    note this is not suitable for sampling, it is only a mechanism in form
+    this is not suitable for sampling due to l_mod and r_mod, use the next function instead
     """
     assert 0 <= x < 2 * pi
     p = 1 / (2 * pi) * math.exp(epsilon/2)
@@ -49,3 +49,4 @@ def unbias_gpm(epsilon, x):
     p_list = [p/math.exp(epsilon), p, p/math.exp(epsilon)]
     length_list = [-C, l, r, 1+C]
     return p_list, length_list
+

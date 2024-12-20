@@ -1,5 +1,11 @@
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
 
+
+plt.rcParams['text.usetex'] = True
+plt.rcParams['font.size'] = 20
+plt.rcParams['font.family'] = 'serif'
 exp = np.e
 pi = np.pi
 
@@ -20,18 +26,21 @@ def mse_ogpm_circular(epsilon):
 
 
 if __name__ == "__main__":
-    machine_delta = 0.01
-    scope = 8
-    epsilon = np.linspace(machine_delta,scope-machine_delta,100)
+    scope = 1 + 2 * pi
+    epsilon = np.linspace(0.01, scope, 100, endpoint=False)
     mse_obj = mse_ogpm_0_C(epsilon) + mse_ogpm_circular(scope-epsilon)
     # draw the plot
     import matplotlib.pyplot as plt
-    plt.plot(epsilon, mse_obj)
+    plt.plot(epsilon, mse_obj, color = 'black')
+    plt.xticks(np.arange(0, 8.1, 2))
+    plt.yticks(np.arange(0, 3.1, 1))
+    plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%g'))
+    plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%g'))
+    plt.savefig('mse_curve.pdf', bbox_inches='tight')
     plt.show()
     # print the minimum
     epsilon_argmin = epsilon[np.argmin(mse_obj)]
     proportion = epsilon_argmin / scope
     print(f"epsilon_argmin = {epsilon_argmin}, proportion = {proportion}")
-    print(f"{1 / (1 + pi)}")
 
 
