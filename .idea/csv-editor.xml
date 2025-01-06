@@ -24,13 +24,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\experiments\experimental\mean_classical_for_ubgpm.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\experiments\experimental\motion_sense_dws_1\sub_1.csv">
           <value>
             <Attribute>
@@ -67,6 +60,13 @@
           </value>
         </entry>
         <entry key="\experiments\theoretical\circular_domain\whole-domain_circular_L2_epsilon_2.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\experiments\theoretical\circular_domain\worst-case_circular_L2.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
