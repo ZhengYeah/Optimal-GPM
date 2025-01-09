@@ -3,7 +3,6 @@
 This repository contains the code for the paper "Collecting Numerical Data with Bounded Domain:
 the Optimal Generalized Piecewise Mechanism under Local Differential Privacy". 
 
-![Comparison with the existing works](assets/comparison.png)
 
 We encode the solving of the optimal m-piece mechanism under a distance metric as a *bilinear* optimization problem 
 and solve it using the Gurobi solver.
