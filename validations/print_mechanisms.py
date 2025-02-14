@@ -39,10 +39,17 @@ def print_distance_01(epsilon, input_x):
     print(f"SW Distance: {sw_distance}")
 
 
+def print_pm_C(epsilon, input_x):
+    p, endpoints = PM.PM_on_C(epsilon, input_x)
+    print(f"PM_on_C:")
+    print(f"p = {p}, endpoints = {endpoints}")
+
+
+
 if __name__ == '__main__':
     epsilon = 1.32
     input_x = 1
     print_mechanisms_01(epsilon, input_x)
     print_distance_01(epsilon, input_x)
 
-    # print_mechanisms_2pi(epsilon, input_x)
+    print_mechanisms_2pi(epsilon, input_x)
