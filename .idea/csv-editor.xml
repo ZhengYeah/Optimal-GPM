@@ -66,7 +66,35 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\experiments\theoretical\circular_domain\worst-case_circular_L1.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\experiments\theoretical\circular_domain\worst-case_circular_L2.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\experiments\theoretical\classical_domain\comparison_truncated_laplace\truncated_laplace.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\experiments\theoretical\classical_domain\small_epsilon\whole_domain_L1_0.2.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\experiments\theoretical\classical_domain\small_epsilon\whole_domain_L1_0.4.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
