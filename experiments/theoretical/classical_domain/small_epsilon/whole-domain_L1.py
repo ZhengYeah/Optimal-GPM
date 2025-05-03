@@ -7,7 +7,7 @@ from src.distance_metric import l1_distance
 from src.min_error_mechanism import MinL1Mechanism
 
 
-epsilon = 0.4
+epsilon = 0.8
 endpoint_a, endpoint_b = 0, 1
 total_piece = 3
 x = np.linspace(0, 1, 49, endpoint=False)
