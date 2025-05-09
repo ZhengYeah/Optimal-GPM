@@ -1,6 +1,7 @@
 import math
 import numpy as np
 from src.distance_metric import l1_distance, l2_distance
+from scipy.integrate import quad
 
 
 def in_machine_error(result, expectation):
@@ -74,7 +75,6 @@ def SW(epsilon, input_x):
     interval_endpoint = [-b, input_x - b, input_x + b, 1 + b]
     interval_probability = [left_right_probability, central_probability, left_right_probability]
     return interval_probability, interval_endpoint
-
 
 if __name__ == "__main__":
     # x = np.linspace(0, 1, 10, endpoint=False)
