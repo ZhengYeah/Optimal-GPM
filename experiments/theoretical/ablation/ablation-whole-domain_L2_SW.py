@@ -32,7 +32,7 @@ def error_SW_truncation(epsilon, input_x):
             return (y - input_x) ** 2 * left_right_probability
     return quad(integrand, -b, 0)[0] * (input_x - 0) ** 2 + quad(integrand, 1, 1 + b)[0] * (1 - input_x) ** 2 + quad(integrand_l2_loss, 0, 1)[0]
 
-epsilon = 4
+epsilon = 2
 in_endpoint_a, in_endpoint_b = 0, 1
 l = SW(epsilon, in_endpoint_a)[1]
 out_endpoint_a, out_endpoint_b = l[0], l[-1]

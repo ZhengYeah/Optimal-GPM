@@ -37,7 +37,7 @@ def error_PM_truncation(epsilon, input_x):
     return quad(integrand, -C, -1)[0] * (input_x + 1) ** 2 + quad(integrand, 1, C)[0] * (1 - input_x) ** 2 + quad(integrand_l2_loss, -1, 1)[0]
 
 
-epsilon = 4
+epsilon = 2
 in_endpoint_a, in_endpoint_b = -1, 1
 l = PM_on_C(epsilon, in_endpoint_a)[1]
 out_endpoint_a, out_endpoint_b = l[0], l[-1]
