@@ -1,12 +1,12 @@
-A piecewise mechanism is instantiated by:
+A piecewise-based mechanism is instantiated by:
 * domain: from endpoint_a to endpoint_b
-* l: (list) endpoints of pieces
-* p: (list) probability list of pieces
-* epsilon: privacy budget
+* l, r: (list) endpoints of each piece
+* p: (list) probability of each piece
+* epsilon: privacy parameter
 * total piece: number of pieces
 
-File `min_error_mechanism` contains the class of solving the optimal piecewise mechanism under different distance metrics.
+File `min_error_mechanism` contains the classes for solving the optimal piecewise-based mechanisms under different distance metrics.
 
-File `distance_metric` contains the methods of calculating different distance.
+File `distance_metric` contains the methods for calculating different distances.
 
-File `closed_form_mechanism` contains the closed-form solution of the optimal piecewise mechanism under absolute error (maybe also optimal for other metrics).
+File `closed_form_mechanism` contains the closed-form expressions of the optimal piecewise mechanism under the absolute error (maybe also optimal for other metrics).
