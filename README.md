@@ -1,6 +1,6 @@
 # OGPM
 
-Code for the paper: [PETS'25] Optimal Piecewise-based Mechanism for Collecting Bounded Numerical Data under Local Differential Privacy
+Code for paper: [PETS'25] Optimal Piecewise-based Mechanism for Collecting Bounded Numerical Data under Local Differential Privacy
 
 **Contributions:** 
 
