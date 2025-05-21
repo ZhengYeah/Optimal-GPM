@@ -4,13 +4,12 @@ Code for paper: [PETS'25] Optimal Piecewise-based Mechanism for Collecting Bound
 
 **Contributions:** 
 
-* The first work to study the optimality of piecewise-based mechanism under its most general form.
-* The closed-form optimal mechanisms for the classical domain and the circular domain.
+* The first work to study the optimality of the piecewise-based mechanism under its most general form.
+* The closed-form optimal mechanisms for classical domains and circular domains.
 
 ## Code Structure
 
-We encode the solving of the optimal $m$-piece mechanism under a distance metric as a *bilinear* optimization problem 
-and solve it using the Gurobi solver.
+We encode the solving of the optimal $m$-piece mechanism under a distance metric as a *bilinear* optimization problem and solve it using the Gurobi solver.
 The solving class for each distance metric can be found in the `src` folder.
 Now we support the following distance metrics:
 - $L_1$ distance (absolute error)
