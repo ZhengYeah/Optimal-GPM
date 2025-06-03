@@ -1,0 +1,13 @@
+[project]
+name = "OGPM"
+version = "0.1.0"
+description = "Code for paper: [PETS'25] Optimal Piecewise-based Mechanism for Collecting Bounded Numerical Data under Local Differential Privacy"
+requires-python = ">=3.9"
+dependencies = [
+    "gurobipy>=12.0.2",
+    "matplotlib>=3.9.4",
+    "notebook>=7.4.3",
+    "numpy>=2.0.2",
+    "pandas>=2.2.3",
+    "scipy>=1.13.1",
+]

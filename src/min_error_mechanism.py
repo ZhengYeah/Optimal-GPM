@@ -30,7 +30,7 @@ class MinErrorMechanism(object):
 
 class MinL1Mechanism(MinErrorMechanism):
     def __init__(self, endpoint_a, endpoint_b, epsilon, total_piece, probabilities=None):
-        """
+        r"""
         distance = |y - x|
         :param endpoint_a: left endpoint of the bound
         :param endpoint_b: right endpoint of the bound
@@ -48,7 +48,7 @@ class MinL1Mechanism(MinErrorMechanism):
     def solve_probabilities(self):
         mid = (self.total_piece - 1) // 2
         m_1 = gp.Model("Quadratic Non-convex")
-        m_1.Params.LogToConsole = 0
+        m_1.setParam("OutputFlag", 0)
 
         # l_i: interval end-points
         # p_i: probability of piece i
@@ -116,7 +116,7 @@ class MinL1Mechanism(MinErrorMechanism):
 
         mid = (self.total_piece - 1) // 2
         m_2 = gp.Model("Quadratic Non-convex 2")
-        m_2.Params.LogToConsole = 0
+        m_2.setParam("OutputFlag", 0)
 
         # l_i: interval end-points
         l = m_2.addMVar(shape=self.total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="l")
@@ -162,7 +162,7 @@ class MinL1Mechanism(MinErrorMechanism):
 
 class MinWassersteinMechanism(MinErrorMechanism):
     def __init__(self, endpoint_a, endpoint_b, epsilon, total_piece, probabilities=None):
-        """
+        r"""
         distance = |\int_{a}^{y} f_1(t) dt - \int_{a}^{y} f_2(t) dt|
         :param endpoint_a: left endpoint of the bound
         :param endpoint_b: right endpoint of the bound
@@ -180,7 +180,7 @@ class MinWassersteinMechanism(MinErrorMechanism):
         mid = (self.total_piece - 1) // 2
 
         m_1 = gp.Model("Quadratic Non-convex")
-        m_1.Params.LogToConsole = 0
+        m_1.setParam("OutputFlag", 0)
 
         # l_i: interval length of piece i, l_{total / 2} is the center piece
         # p_i: probability of piece i
@@ -255,7 +255,7 @@ class MinWassersteinMechanism(MinErrorMechanism):
 
         mid = (self.total_piece - 1) // 2
         m_2 = gp.Model("Quadratic Non-convex")
-        m_2.Params.LogToConsole = 0
+        m_2.setParam("OutputFlag", 0)
 
         # l_i: interval length of piece i, l_{total / 2} is the center piece
         # interval region: [0, 1]
@@ -292,8 +292,7 @@ class MinWassersteinMechanism(MinErrorMechanism):
                 m_2.addConstr(left_integration[i] == left_length_x * (2 * height[i - 1] + height_t) / 2, name="cons_5")
         for i in range(mid + 1):
             if i == 0:
-                m_2.addConstr(right_integration[i] == (l[mid] - left_length_x) *
-                              (height[mid] + height_t) / 2, name="cons_5")
+                m_2.addConstr(right_integration[i] == (l[mid] - left_length_x) * (height[mid] + height_t) / 2, name="cons_5")
             else:
                 m_2.addConstr(right_integration[i] == (height[i + mid] + height[i + mid - 1]) * l[i + mid] / 2,
                               name="cons_5")
@@ -311,7 +310,7 @@ class MinWassersteinMechanism(MinErrorMechanism):
 
 class MinL2Mechanism(MinErrorMechanism):
     def __init__(self, endpoint_a, endpoint_b, epsilon, total_piece, probabilities=None):
-        """
+        r"""
         distance = (y - x)^2
         :param endpoint_a: left endpoint of the bound
         :param endpoint_b: right endpoint of the bound
@@ -329,7 +328,7 @@ class MinL2Mechanism(MinErrorMechanism):
     def solve_probabilities(self):
         mid = (self.total_piece - 1) // 2
         m_1 = gp.Model("Quadratic Non-convex")
-        m_1.Params.LogToConsole = 0
+        m_1.setParam("OutputFlag", 0)
 
         # l_i: interval end-points
         # p_i: probability of piece i
@@ -388,7 +387,7 @@ class MinL2Mechanism(MinErrorMechanism):
 
         mid = (self.total_piece - 1) // 2
         m_2 = gp.Model("Quadratic Non-convex 2")
-        m_2.Params.LogToConsole = 0
+        m_2.setParam("OutputFlag", 0)
 
         # l_i: interval end-points
         l = m_2.addMVar(shape=self.total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="l")
@@ -430,7 +429,7 @@ class MinL2Mechanism(MinErrorMechanism):
 
 class MinL2MechanismAblation(MinErrorMechanism):
     def __init__(self, in_endpoint_a, in_endpoint_b, out_endpoint_a, out_endpoint_b, epsilon, total_piece, probabilities=None):
-        """
+        r"""
         distance = (y - x)^2
         :param in_endpoint_a: left endpoint of the input bound
         :param in_endpoint_b: right endpoint of the input bound
@@ -450,7 +449,7 @@ class MinL2MechanismAblation(MinErrorMechanism):
     def solve_probabilities(self):
         mid = (self.total_piece - 1) // 2
         m_1 = gp.Model("Quadratic Non-convex")
-        m_1.Params.LogToConsole = 0
+        m_1.setParam("OutputFlag", 0)
 
         # l_i: interval end-points
         # p_i: probability of piece i
@@ -509,7 +508,7 @@ class MinL2MechanismAblation(MinErrorMechanism):
 
         mid = (self.total_piece - 1) // 2
         m_2 = gp.Model("Quadratic Non-convex 2")
-        m_2.Params.LogToConsole = 0
+        m_2.setParam("OutputFlag", 0)
 
         # l_i: interval end-points
         l = m_2.addMVar(shape=self.total_piece + 1, lb=-GRB.INFINITY, vtype=GRB.CONTINUOUS, name="l")
