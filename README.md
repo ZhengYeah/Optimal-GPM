@@ -1,6 +1,6 @@
 # OGPM
 
-[![arXiv](https://img.shields.io/badge/arXiv-<2505.15483>-<COLOR>.svg)](https://arxiv.org/abs/2505.15483)
+[![arXiv](https://img.shields.io/badge/arXiv-2505.15483-<COLOR>.svg)](https://arxiv.org/abs/2505.15483)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Code for paper: [PETS'25] Optimal Piecewise-based Mechanism for Collecting Bounded Numerical Data under Local Differential Privacy
@@ -35,7 +35,7 @@ This project is packaged by `uv`, a modern Python package management system simi
 All dependencies are listed in `pyproject.toml`.
 We recommend using `uv` to create a virtual environment and install the dependencies.
 
-![img.png](img.png)
+![img.png](others/uv_official.png)
 
 To install `uv`, follow the instructions in the "[uv installation](https://docs.astral.sh/uv/)".
 
