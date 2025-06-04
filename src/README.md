@@ -10,3 +10,5 @@ File `min_error_mechanism.py` contains the classes for solving the optimal piece
 File `distance_metric.py` contains the methods for calculating different distances.
 
 File `closed_form_mechanism.py` contains the closed-form expressions of the optimal piecewise mechanism under the absolute error (maybe also optimal for other metrics).
+
+File `PM.py` and `SW.py` contains the PM and SW mechanisms and their variants.
