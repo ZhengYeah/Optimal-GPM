@@ -92,9 +92,10 @@ if __name__ == '__main__':
     test_times = 50
 
     # read data form csv
-    data_1 = pd.read_csv('../experiments/experimental/motion_sense_dws_1/sub_1.csv')
-    data_2 = pd.read_csv('../experiments/experimental/motion_sense_dws_1/sub_2.csv')
-    data_3 = pd.read_csv('../experiments/experimental/motion_sense_dws_1/sub_3.csv')
+    project_root = pathlib.Path(__file__).resolve().parents[1]
+    data_1 = pd.read_csv(f'{project_root}/experiments/experimental/motion_sense_dws_1/sub_1.csv')
+    data_2 = pd.read_csv(f'{project_root}/experiments/experimental/motion_sense_dws_1/sub_2.csv')
+    data_3 = pd.read_csv(f'{project_root}/experiments/experimental/motion_sense_dws_1/sub_3.csv')
     data = pd.concat([data_1, data_2, data_3])
 
     acceleration = data['userAcceleration.x']

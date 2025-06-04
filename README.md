@@ -61,9 +61,12 @@ The `reproduction` folder contains scripts  to reproduce key results from the pa
   |- figure_8_11.py: Figure 8a, 9a, 10a, 11b (Page 10)  (<1 minute)
   |- figure_12.py: Figure 12a and 12b (Page 11)  (<1 minute)
   |- figure_13_15.py: Figure 13a, 14, 15 (Page 11~12)  (<1 minute)
-  |- figure_16_17.py: Figure 16a and 17a (Page 12)  (<10 minutes)
+  |- figure_16_17.py: Figure 16a and 17a (Page 12)  (subsampled, <5 minutes)
 ```
 Some figures are omitted due to minor parameter differences, for brevity.
+The last script is a subsampled version of the original one to speed up the reproduction.
+It may slightly differ from the original figure in the paper, but the overall trend remains the same.
+The fine-grained results can be obtained by running the scripts in the `experiments` folder.
 
 You can run these scripts directly with `uv run` (no need to manually activate the environment).
 For example, to generate the first group of figures:
