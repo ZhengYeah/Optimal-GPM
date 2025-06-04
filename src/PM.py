@@ -11,7 +11,7 @@ def in_machine_error(result, expectation):
 
 
 def PM_on_D(endpoint_a, endpoint_b, epsilon, input_x):
-    """
+    r"""
     [endpoint_a, endpoint_b) -> [endpoint_a, endpoint_b)
     """
     assert (endpoint_a <= input_x <= endpoint_b)
@@ -43,7 +43,7 @@ def PM_on_D(endpoint_a, endpoint_b, epsilon, input_x):
 
 
 def PM_on_01(epsilon, input_x):
-    """
+    r"""
     [0, 1) -> [0, 1)
     """
     assert (0 <= input_x <= 1)
@@ -73,7 +73,7 @@ def PM_on_01(epsilon, input_x):
 
 
 def PM_trans_01(epsilon, input_x):
-    """
+    r"""
     [0, 1) -> [-C/2 + 1/2, C/2 + 1/2)
     """
     assert (0 <= input_x <= 1)
@@ -102,7 +102,7 @@ def PM_trans_01(epsilon, input_x):
     return interval_probability, interval_endpoint
 
 def PM_on_C(epsilon, input_x):
-    """
+    r"""
     [-1, 1) -> [-C, C)
     """
     assert (-1 <= input_x <= 1)

@@ -130,6 +130,7 @@ if __name__ == '__main__':
     plt.xticks(np.arange(1, 9, 1))
     plt.legend(loc='upper right')
     plt.ticklabel_format(axis='y', style='sci', scilimits=(2, 2))
+    plt.title('Figure 16a')
 
     ######## End of Figure 16a ########
 
@@ -158,6 +159,7 @@ if __name__ == '__main__':
     plt.xticks(np.arange(1, 9, 1))
     # plt.yticks(np.arange(0, 0.1, 0.02))
     leg = plt.legend(loc='upper right')
+    plt.title('Figure 17a')
     plt.show()
 
 ######## End of Figure 17a ########

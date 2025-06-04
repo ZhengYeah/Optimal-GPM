@@ -32,7 +32,7 @@ This project is packaged by `uv`, a modern Python package management system simi
 All dependencies are listed in `pyproject.toml`.
 We recommend using `uv` to create a virtual environment and install the dependencies.
 
-To install `uv`, follow the instructions in the '[uv installation](https://docs.astral.sh/uv/)'.
+To install `uv`, follow the instructions in the "[uv installation](https://docs.astral.sh/uv/)".
 
 After installation, follow the prompts to add `uv` to your system's `PATH`.
 You can verify the installation by running the following command in your terminal (Windows, Linux, or macOS):
@@ -52,7 +52,7 @@ After installing `uv`, cd to the project root directory and run:
 This command creates a virtual environment in the project root and installs the dependencies listed in `pyproject.toml`.
 You can then run the provided scripts to reproduce the results in the paper. Two options are available:
 
-### Option 1 (Quick) -- Recommended:
+### Option 1 (Quick) -- Recommended
 
 The `reproduction` folder contains scripts  to reproduce key results from the paper. The structure is as follows:
 
@@ -74,7 +74,7 @@ For example, to generate the first group of figures:
 
 This will display the corresponding figures using matplotlib.
 
-### Option 2 (Detailed):
+### Option 2 (Detailed)
 
 The `experiments` folder contains all scripts used in the paper, including intermediate results and full figures.
 These scripts rely on PyCharm’s path configuration. To run them, you need the PyCharm GUI and run them by right-clicking the script.

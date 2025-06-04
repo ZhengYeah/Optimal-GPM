@@ -3,7 +3,7 @@ from src.utilities import endpoints_to_lengths
 
 
 def l1_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
-    """
+    r"""
     distance = |y - x|
     :param endpoint_a: start point of domain D
     :param endpoint_b: end point of domain D
@@ -33,7 +33,7 @@ def l1_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
 
 
 def wasserstein_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
-    """
+    r"""
     distance = |\int_{a}^{y} f_1(t) dt - \int_{a}^{y} f_2(t) dt|
     :param endpoint_a: start point of domain D
     :param endpoint_b: end point of domain D
@@ -82,7 +82,7 @@ def wasserstein_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
 
 
 def l2_distance(endpoint_a, endpoint_b, total_piece, p, l, x):
-    """
+    r"""
     distance = (y - x)^2
     :param endpoint_a: start point of domain D
     :param endpoint_b: end point of domain D

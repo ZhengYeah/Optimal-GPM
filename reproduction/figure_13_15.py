@@ -55,6 +55,7 @@ plt.xticks(np.arange(0, 1.1, 0.2))
 plt.yticks(np.arange(0, 0.45, 0.1))
 plt.ylim(0, 0.45)
 plt.legend(loc='lower right')
+plt.title('Figure 13a')
 
 ######## End of Figure 13a ########
 
@@ -74,11 +75,12 @@ plt.plot(epsilon, error_truncated_laplace_values, label='T-Laplace', linewidth=2
 plt.plot(epsilon, error_bounded_laplace_values, label='B-Laplace', linewidth=2, linestyle='-', color=[0, 0, 1], marker='x', markersize=8)
 plt.plot(epsilon, error_gpm_values, label='GPM', linewidth=2, linestyle='-', color=[1, 0, 0])
 plt.xlabel(r'Privacy parameter $\varepsilon$')
-plt.ylabel(r'Worst-case square error')
+plt.ylabel(r'Worst-case error')
 plt.xticks(np.arange(1, 9, 1))
 plt.yticks(np.arange(0, 1, 0.2))
 plt.ylim(0, 1)
 plt.legend(loc='upper right')
+plt.title('Figure 14')
 
 ######## End of Figure 14 ########
 
@@ -118,6 +120,7 @@ plt.xlabel(r'Privacy parameter $\varepsilon$')
 plt.xticks(np.arange(1, 9, 1))
 plt.yticks(np.arange(0, 1.6, 0.5))
 plt.legend(loc='upper right')
+plt.title('Figure 15')
 plt.show()
 
 ######## End of Figure 15 ########

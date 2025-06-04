@@ -12,7 +12,7 @@ def in_machine_error(result, expectation):
 
 
 def SW_on_D(endpoint_a, endpoint_b, epsilon, input_x):
-    """
+    r"""
     [endpoint_a, endpoint_b) -> [endpoint_a, endpoint_b)
     """
     assert (endpoint_a <= input_x <= endpoint_b)
@@ -42,7 +42,7 @@ def SW_on_D(endpoint_a, endpoint_b, epsilon, input_x):
 
 
 def SW_on_01(epsilon, input_x):
-    """
+    r"""
     [0, 1) -> [0, 1)
     """
     assert (0 <= input_x <= 1)
@@ -65,7 +65,7 @@ def SW_on_01(epsilon, input_x):
 
 
 def SW(epsilon, input_x):
-    """
+    r"""
     [0, 1) -> [-b, 1+b]
     """
     assert (0 <= input_x <= 1)
