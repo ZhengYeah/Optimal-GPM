@@ -30,7 +30,7 @@ if __name__ == '__main__':
     epsilon = np.linspace(1, 8, 29, endpoint=True)
     # save to csv
     import csv
-    filename = f"worst-case_L1.csv"
+    filename = f"worst_case_L1.csv"
     with open(filename, "w", newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(["Epsilon", "GPM", "Staircase", "Truncated Laplace", "Bounded Laplace"])

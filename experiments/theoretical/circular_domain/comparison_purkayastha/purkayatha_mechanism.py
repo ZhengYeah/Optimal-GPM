@@ -2,7 +2,6 @@ import numpy as np
 import csv
 from src.min_error_mechanism import MinL1Mechanism
 
-
 pi = np.pi
 exp = np.e
 

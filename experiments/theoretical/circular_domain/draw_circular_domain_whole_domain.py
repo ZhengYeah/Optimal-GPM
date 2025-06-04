@@ -4,12 +4,11 @@ import pandas as pd
 from matplotlib.ticker import FormatStrFormatter
 
 
-plt.rcParams['text.usetex'] = True
 plt.rcParams['font.size'] = 20
 plt.rcParams['font.family'] = 'serif'
 
 # Load data
-data = pd.read_csv('whole-domain_circular_L2_epsilon_2.csv')
+data = pd.read_csv('whole_domain_circular_L2_epsilon_2.csv')
 
 fig, ax = plt.subplots()
 fig.set_size_inches(5, 4)
@@ -27,12 +26,12 @@ ax.set_ylim(0.1, 6.1)
 ax.legend(loc='upper right')
 fig.gca().yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 
-plt.savefig('whole-domain_circular_L2_epsilon_2.pdf', bbox_inches='tight')
+plt.savefig('whole_domain_circular_L2_epsilon_2.pdf', bbox_inches='tight')
 plt.show()
 
 
 # Load data
-data = pd.read_csv('whole-domain_circular_L2_epsilon_4.csv')
+data = pd.read_csv('whole_domain_circular_L2_epsilon_4.csv')
 
 fig, ax = plt.subplots()
 fig.set_size_inches(5, 4)
@@ -50,7 +49,7 @@ ax.set_ylim(0.1, 4.1)
 ax.legend(loc='upper right')
 fig.gca().yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 
-plt.savefig('whole-domain_circular_L2_epsilon_4.pdf', bbox_inches='tight')
+plt.savefig('whole_domain_circular_L2_epsilon_4.pdf', bbox_inches='tight')
 plt.show()
 
 

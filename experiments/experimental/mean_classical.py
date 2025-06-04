@@ -3,7 +3,7 @@ import numpy as np
 from multiprocessing import Pool
 from src.closed_form_mechanism import classical_mechanism_01, unbias_gpm
 from src.utilities import pdf_to_cdf, sampling_from_cdf
-import SW, PM
+from src import PM, SW
 
 
 def compare_mechanisms(epsilon, data):

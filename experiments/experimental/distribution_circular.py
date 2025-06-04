@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from src.closed_form_mechanism import circular_mechanism_pi
 from src.utilities import pdf_to_cdf, sampling_from_cdf
-import SW, PM
+from src import PM, SW
+
 pi = 3.14
 
 

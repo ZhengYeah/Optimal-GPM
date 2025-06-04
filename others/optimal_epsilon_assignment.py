@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
 
 
-plt.rcParams['text.usetex'] = True
 plt.rcParams['font.size'] = 20
 plt.rcParams['font.family'] = 'serif'
 exp = np.e
@@ -16,13 +15,11 @@ def mse_ogpm_0_C(epsilon, x=0):
     C = (exp ** (epsilon / 2) - 1) / (exp ** epsilon - 1) / 2
     return p_high / 3 * ((2 * C - x) ** 3 + x ** 3) + p_low / 3 * (-(2 * C - x) ** 3 + (1 - x) ** 3)
 
-
 def mse_ogpm_circular(epsilon):
     p_high = 1 / (2 * pi) * exp ** (epsilon / 2)
     p_low = p_high / (exp ** epsilon)
     C = (exp ** (epsilon / 2) - 1) / (exp ** epsilon - 1) * pi
     return 2 / 3 * (p_high * C ** 3 + p_low * (pi ** 3 - C ** 3))
-
 
 
 if __name__ == "__main__":

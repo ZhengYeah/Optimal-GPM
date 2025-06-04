@@ -3,9 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from src.closed_form_mechanism import circular_mechanism_pi
 from src.utilities import pdf_to_cdf, sampling_from_cdf
-import SW, PM
-pi = 3.14
+from src import PM, SW
 
+pi = 3.14
 
 def circular_mean(angles):
     """
@@ -16,7 +16,6 @@ def circular_mean(angles):
     x = np.mean(np.cos(angles))
     y = np.mean(np.sin(angles))
     return np.arctan2(y, x)
-
 
 def compare_mechanisms(epsilon, steering):
     """

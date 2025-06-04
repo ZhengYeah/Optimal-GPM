@@ -1,13 +1,13 @@
 import numpy as np
 import csv
-from SW import SW_on_01, SW
-from PM import PM_on_01, PM_trans_01
+from src.SW import SW_on_01, SW
+from src.PM import PM_on_01, PM_trans_01
 from src.closed_form_mechanism import unbias_gpm
 from src.distance_metric import l1_distance
 from src.min_error_mechanism import MinL1Mechanism
 
 
-epsilon = 4
+epsilon = 0.8
 endpoint_a, endpoint_b = 0, 1
 total_piece = 3
 x = np.linspace(0, 1, 49, endpoint=False)

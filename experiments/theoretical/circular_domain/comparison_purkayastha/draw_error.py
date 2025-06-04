@@ -3,8 +3,6 @@ import numpy as np
 import pandas as pd
 from matplotlib.ticker import FormatStrFormatter
 
-
-plt.rcParams['text.usetex'] = True
 plt.rcParams['font.size'] = 20
 plt.rcParams['font.family'] = 'serif'
 

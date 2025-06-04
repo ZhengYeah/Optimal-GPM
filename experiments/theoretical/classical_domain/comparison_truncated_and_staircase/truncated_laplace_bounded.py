@@ -1,7 +1,7 @@
-from src.closed_form_mechanism import classical_mechanism_01
-from scipy.stats import laplace
-from src.distance_metric import l1_distance
 import numpy as np
+from src.closed_form_mechanism import classical_mechanism_01
+from src.distance_metric import l1_distance
+from scipy.stats import laplace
 
 exp = np.e
 
@@ -24,26 +24,18 @@ def error_bounded_laplace(epsilon, x):
     C_q = (1 - np.exp(-epsilon)) / epsilon
     first_item = 2 - (1 + epsilon * x) * np.exp(-epsilon * x)
     second_item = (1 + epsilon * (1 - x)) * np.exp(-epsilon * (1 - x))
-    lap = laplace(loc=x, scale=1/epsilon)
-    mass_0_1 = lap.expect(lambda y: abs(y - x), lb=0, ub=1)
-    tmp = 1 / C_q * (2 / epsilon) * mass_0_1
-    return 1 / C_q * (1 / epsilon ** 2) * (first_item - second_item), tmp
+    return 1 / C_q * (1 / epsilon ** 2) * (first_item - second_item)
 
 if __name__ == '__main__':
-    # x = np.linspace(0, 1, 50, endpoint=False)
-    # epsilon = 2
-    # # save to csv
-    # import csv
-    # filename = f"epsilon_{epsilon}.csv"
-    # with open(filename, "w", newline='') as csvfile:
-    #     csvwriter = csv.writer(csvfile)
-    #     csvwriter.writerow(["x", "GPM", "Staircase", "Truncated Laplace", "Bounded Laplace"])
-    #     for i in range(len(x)):
-    #         one_row = [x[i], error_gpm(epsilon, x[i]), error_staircase(epsilon, x[i]), error_truncated_laplace(epsilon, x[i]), error_bounded_laplace(epsilon, x[i])]
-    #         csvwriter.writerow(one_row)
-    # csvfile.close()
-
-    x = 0.5
+    x = np.linspace(0, 1, 50, endpoint=False)
     epsilon = 2
-    tmp_1, tmp_2 = error_bounded_laplace(epsilon, x)
-    print(f"Bounded Laplace: {tmp_1}, {tmp_2}")
+    # save to csv
+    import csv
+    filename = f"epsilon_{epsilon}.csv"
+    with open(filename, "w", newline='') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(["x", "GPM", "Staircase", "Truncated Laplace", "Bounded Laplace"])
+        for i in range(len(x)):
+            one_row = [x[i], error_gpm(epsilon, x[i]), error_staircase(epsilon, x[i]), error_truncated_laplace(epsilon, x[i]), error_bounded_laplace(epsilon, x[i])]
+            csvwriter.writerow(one_row)
+    csvfile.close()

@@ -1,6 +1,6 @@
 import numpy as np
 import csv
-from SW import SW
+from src.SW import SW
 from src.distance_metric import l2_distance
 from src.min_error_mechanism import MinL2Mechanism
 import math
@@ -8,7 +8,7 @@ from scipy.integrate import quad
 
 
 def error_SW_truncation(epsilon, input_x):
-    """
+    r"""
     [0, 1) -> [0, 1)
     """
     assert (0 <= input_x <= 1)
@@ -32,6 +32,7 @@ def error_SW_truncation(epsilon, input_x):
             return (y - input_x) ** 2 * left_right_probability
     return quad(integrand, -b, 0)[0] * (input_x - 0) ** 2 + quad(integrand, 1, 1 + b)[0] * (1 - input_x) ** 2 + quad(integrand_l2_loss, 0, 1)[0]
 
+
 epsilon = 2
 in_endpoint_a, in_endpoint_b = 0, 1
 l = SW(epsilon, in_endpoint_a)[1]
@@ -52,9 +53,8 @@ for i, _ in enumerate(x):
     opt_PM.solve_probabilities()
     distance_optimal[i] = opt_PM.solve_lr(x[i])[1]
 
-
 fields = ["x", "SW", "Optimal", "SW_truncation"]
-filename = "ablation_whole-domain_l2_SW.csv"
+filename = "ablation_whole_domain_l2_SW.csv"
 with open(filename, "w", newline='') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(fields)

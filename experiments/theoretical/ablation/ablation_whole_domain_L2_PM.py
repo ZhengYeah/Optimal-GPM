@@ -1,15 +1,14 @@
-from logging import raiseExceptions
-
 import numpy as np
 import csv
-from PM import PM_on_C
+from src.PM import PM_on_C
 from src.distance_metric import l2_distance
 from src.min_error_mechanism import MinL2Mechanism
 import math
 from scipy.integrate import quad
 
+
 def error_PM_truncation(epsilon, input_x):
-    """
+    r"""
     [-1, 1) -> [-1, 1)
     """
     assert (-1 <= input_x <= 1)
@@ -59,7 +58,7 @@ for i, _ in enumerate(x):
 
 
 fields = ["x", "PM", "Optimal", "PM_truncation"]
-filename = "ablation_whole-domain_L2_PM.csv"
+filename = "ablation_whole_domain_L2_PM.csv"
 with open(filename, "w", newline='') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(fields)

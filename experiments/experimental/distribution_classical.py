@@ -2,8 +2,7 @@ import pandas as pd
 import numpy as np
 from src.closed_form_mechanism import classical_mechanism_01
 from src.utilities import pdf_to_cdf, sampling_from_cdf
-import SW, PM
-import matplotlib.pyplot as plt
+from src import PM, SW
 
 
 def compare_mechanisms(epsilon, data, n_bins):
@@ -57,7 +56,6 @@ if __name__ == '__main__':
     data_2 = pd.read_csv('./motion_sense_dws_1/sub_2.csv')
     data_3 = pd.read_csv('./motion_sense_dws_1/sub_3.csv')
     data = pd.concat([data_1, data_2, data_3])
-
     acceleration = data['userAcceleration.x']
     acceleration = acceleration.values
     print(f"Length of acceleration: {len(acceleration)}")

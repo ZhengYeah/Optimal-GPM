@@ -4,7 +4,6 @@ import pandas as pd
 from matplotlib.ticker import FormatStrFormatter
 
 
-plt.rcParams['text.usetex'] = True
 plt.rcParams['font.size'] = 20
 plt.rcParams['font.family'] = 'serif'
 
@@ -23,7 +22,7 @@ plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%g'))
 plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%g'))
 plt.legend(loc='upper right')
 
-plt.savefig('whole-domain_L1_2.pdf', bbox_inches='tight')
+plt.savefig('whole_domain_L1_2.pdf', bbox_inches='tight')
 plt.show()
 
 
@@ -42,6 +41,5 @@ plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%g'))
 plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%g'))
 plt.legend(loc='upper right')
 
-plt.savefig('whole-domain_L1_4.pdf', bbox_inches='tight')
+plt.savefig('whole_domain_L1_4.pdf', bbox_inches='tight')
 plt.show()
-

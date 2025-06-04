@@ -3,8 +3,6 @@ import numpy as np
 import pandas as pd
 from matplotlib.ticker import FormatStrFormatter
 
-
-plt.rcParams['text.usetex'] = True
 plt.rcParams['font.size'] = 20
 plt.rcParams['font.family'] = 'serif'
 
@@ -22,10 +20,7 @@ plt.yticks(np.arange(0, 0.45, 0.1))
 plt.ylim(0, 0.45)
 plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%g'))
 plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%g'))
-leg = plt.legend(loc='lower right')
-# for i, test in enumerate(leg.get_texts()):
-#     if i == 3:
-#         test.set_fontsize(14)
+plt.legend(loc='lower right')
 
 plt.savefig(f"epsilon_2.pdf", bbox_inches='tight')
 plt.show()
@@ -44,10 +39,7 @@ plt.yticks(np.arange(0, 0.45, 0.1))
 plt.ylim(0, 0.40)
 plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%g'))
 plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%g'))
-leg = plt.legend(loc='lower right')
-# for i, test in enumerate(leg.get_texts()):
-#     if i == 3:
-#         test.set_fontsize(14)
+plt.legend(loc='lower right')
 
 plt.savefig(f"epsilon_4.pdf", bbox_inches='tight')
 plt.show()
