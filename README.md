@@ -1,5 +1,8 @@
 # OGPM
 
+[![arXiv](https://img.shields.io/badge/arXiv-<2505.15483>-<COLOR>.svg)](https://arxiv.org/abs/2505.15483)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Code for paper: [PETS'25] Optimal Piecewise-based Mechanism for Collecting Bounded Numerical Data under Local Differential Privacy
 
 **Contributions:** 
@@ -32,6 +35,8 @@ This project is packaged by `uv`, a modern Python package management system simi
 All dependencies are listed in `pyproject.toml`.
 We recommend using `uv` to create a virtual environment and install the dependencies.
 
+![img.png](img.png)
+
 To install `uv`, follow the instructions in the "[uv installation](https://docs.astral.sh/uv/)".
 
 After installation, follow the prompts to add `uv` to your system's `PATH`.
@@ -63,19 +68,20 @@ The `reproduction` folder contains scripts  to reproduce key results from the pa
   |- figure_13_15.py: Figure 13a, 14, 15 (Page 11~12)  (<1 minute)
   |- figure_16_17.py: Figure 16a and 17a (Page 12)  (subsampled, <5 minutes)
 ```
-Some figures are omitted due to minor parameter differences, for brevity.
-The last script is a subsampled version of the original one to speed up the reproduction.
-It may slightly differ from the original figure in the paper, but the overall trend remains the same.
-The fine-grained results can be obtained by running the scripts in the `experiments` folder.
 
 You can run these scripts directly with `uv run` (no need to manually activate the environment).
 For example, to generate the first group of figures:
 
 ```
-[PROJECT_ROOT]$ uv run reproduction/figure_8_11.py
+[PROJECT_ROOT]$ uv run ./reproduction/figure_8_11.py
 ```
 
 This will display the corresponding figures using matplotlib.
+
+Some figures are omitted due to minor parameter differences, for brevity.
+The last script is a subsampled version of the original one to speed up the reproduction.
+It may slightly differ from the original figure in the paper, but the overall trend remains the same.
+The fine-grained results can be obtained by running the scripts in the `experiments` folder.
 
 ### Option 2 (Detailed)
 
