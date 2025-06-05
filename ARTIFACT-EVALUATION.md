@@ -74,7 +74,7 @@ This will print: all installed packages are compatible.
 
 (Figure 12, Page 11) OGPM shows smaller expected errors than the original PM and SW mechanisms on their respective data domains.
 
-#### Main Result 3: Comparison with Original PM and SW
+#### Main Result 3: Comparison with Other Mechanisms
 
 (Figure 13–15, Pages 11–12) OGPM is compared with other non-piecewise-based mechanisms, showing improved performance in expected error.
 
@@ -123,7 +123,7 @@ To reproduce the first result, run
 [PROJECT_ROOT]$ uv run ./reproduction/figure_12.py
 ```
 
-#### Experiment 3: Comparison with Original PM and SW
+#### Experiment 3: Comparison with Other Mechanisms
 
 ```
 [PROJECT_ROOT]$ uv run ./reproduction/figure_13_15.py
