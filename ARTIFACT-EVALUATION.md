@@ -48,7 +48,15 @@ uv --version
 ```
 This should display the installed version of `uv`.
 
-**Install dependencies.** After installing `uv`, cd to the project root directory and run:
+**Install dependencies.** Download the artifact from the GitHub repository and navigate to the project root directory:
+
+```
+git clone https://github.com/ZhengYeah/Optimal-GPM.git
+cd Optimal-GPM
+```
+
+You should be in the project root directory, which contains the `pyproject.toml` file. 
+Then, run the following `uv` command:
 
 ```
 [PROJECT_ROOT]$ uv sync
