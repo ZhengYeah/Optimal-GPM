@@ -32,6 +32,8 @@ The main folders and files are as follows:
 
 ## Reproduction 
 
+Tested environments: `uv` version `0.7.11` and Python version `3.12`~`3.13`.
+
 **Install UV package manager.**
 This project is packaged by `uv`, a modern Python package management system similar to `miniconda` or `poetry`.
 All dependencies are listed in `pyproject.toml`.
@@ -76,6 +78,12 @@ For example, to generate the first group of figures:
 
 ```
 [PROJECT_ROOT]$ uv run ./reproduction/figure_8_11.py
+```
+
+You can also specify a tested Python version (e.g. Python 3.13):
+
+```
+[PROJECT_ROOT]$ uv run --python 3.13 ./reproduction/figure_8_11.py
 ```
 
 This will display the corresponding figures using matplotlib.
