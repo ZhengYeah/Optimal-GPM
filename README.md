@@ -95,8 +95,12 @@ The fine-grained results can be obtained by running the scripts in the `experime
 
 ### Option 2 (Detailed)
 
-The `experiments` folder contains all scripts used in the paper, including intermediate results and full figures.
-These scripts rely on PyCharm’s path configuration. To run them, you need the PyCharm GUI and run them by right-clicking the script.
+The `experiments` folder contains all scripts used in the paper, including intermediate results and full figures. These scripts rely on PyCharm’s path configuration. To run them, you need the PyCharm GUI and run them by right-clicking the script.
+
+If you have installed `uv`, you can select it as the interpreter in PyCharm. PyCharm will then automatically create a virtual environment and install all dependencies specified in `pyproject.toml`.
+For detailed instructions, see the official guide: [PyCharm: configure a uv environment](https://www.jetbrains.com/help/pycharm/uv.html).
+
+After setting up the environment, there should be no package import errors. Then you can run the scripts by opening them and right-clicking in the PyCharm editor and selecting "Run `file_name.py`".
 
 The scripts are organized as follows:
 
